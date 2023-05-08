@@ -10,10 +10,11 @@ public class JUButton extends JComponent implements MouseListener {
     private Image button;
 
     public JUButton(String PathImage, int posX, int posY){
+
         this.posX = posX;
         this.posY = posY;
         button = new ImageIcon("java/src/main/resources/Rust icon.png").getImage();
-        setBounds(this.posX, posY, button.getWidth(null), button.getHeight(null));
+        setBounds(this.posX, this.posY, button.getWidth(null), button.getHeight(null));
         addMouseListener(this);
     }
 
@@ -29,7 +30,7 @@ public class JUButton extends JComponent implements MouseListener {
         System.out.println("pene pene pene");
     }
     @Override
-    public void mouseReleased(MouseEvent e) { clicked = false; }
+    public void mouseReleased(MouseEvent e) { /*clicked = false;*/ }
     @Override
     public void mouseEntered(MouseEvent e) {
 
