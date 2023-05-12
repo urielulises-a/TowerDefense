@@ -12,12 +12,14 @@ public class Main extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
+        ventana.menu.opciones();
 
     }
 
     public static void main(String[] args) {
 
         Main main = new Main();
+
 
     }
 }

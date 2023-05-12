@@ -6,7 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 public class JUButton extends JComponent implements MouseListener {
     private int posX, posY;
-    boolean clicked;
+    private boolean clicked;
     private Image button;
 
     public JUButton(String PathImage, int posX, int posY){
@@ -18,19 +18,26 @@ public class JUButton extends JComponent implements MouseListener {
         addMouseListener(this);
     }
 
+    public boolean isClicked() {
+        return clicked;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(button, 0, 0, null);
     }
-
     @Override
     public void mouseClicked(MouseEvent e) {
+
         clicked = true;
-        System.out.println("pene pene pene");
+        System.out.println("Mouse clicked   ");
+
     }
     @Override
-    public void mouseReleased(MouseEvent e) { /*clicked = false;*/ }
+    public void mouseReleased(MouseEvent e) {
+
+    }
     @Override
     public void mouseEntered(MouseEvent e) {
 
