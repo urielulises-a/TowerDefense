@@ -31,7 +31,7 @@ public class JUButton extends JComponent implements MouseListener {
     public void mouseClicked(MouseEvent e) {
 
         clicked = true;
-        System.out.println("Mouse clicked   ");
+        System.out.println("Mouse clicked");
 
     }
     @Override

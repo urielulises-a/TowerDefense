@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class Menu extends JComponent {
 
-    public JUButton buttonPlay;
-    public JUButton buttonCredits;
+    public static JUButton buttonPlay;
+    public static JUButton buttonCredits;
     private Image backGround;
     private int imageWidth = 80;
     public Menu(){

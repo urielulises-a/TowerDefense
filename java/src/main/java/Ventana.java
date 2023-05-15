@@ -11,19 +11,8 @@ public class Ventana extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         add(menu);
-        changeScene();
 
         setLayout(null);
 
-
     }
-
-    public void changeScene(){
-       if(menu.buttonPlay.isClicked()){
-           remove(menu);
-  
-
-       }
-    }
-
 }
