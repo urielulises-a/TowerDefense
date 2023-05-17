@@ -11,6 +11,11 @@ public class Path {
         points = new ArrayList<>();
     }
 
+    public Path(Point[] Points){
+        for (Point point : Points) {
+            this.points.add(point);
+        }
+    }
     public void addPoint(int x, int y) {
         points.add(new Point(x, y));
     }

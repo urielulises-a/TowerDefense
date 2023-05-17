@@ -1,6 +1,7 @@
 package GameLogic;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Gameplay extends JPanel{
@@ -14,6 +15,12 @@ public class Gameplay extends JPanel{
         dogsInMap = new ArrayList<Dogs>();
         catsInMap = new ArrayList<Cats>();
         setLayout(null);
+    }
+
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Prueba");
+        
     }
 
 
