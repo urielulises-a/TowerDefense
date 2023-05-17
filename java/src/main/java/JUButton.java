@@ -11,6 +11,7 @@ public class JUButton extends JComponent implements MouseListener {
     private boolean clicked;
     private String PathImage;
     private Image button;
+    private Image newButton;
 
     public JUButton(String PathImage, int posX, int posY){
 
@@ -18,7 +19,9 @@ public class JUButton extends JComponent implements MouseListener {
         this.posY = posY;
         this.PathImage = PathImage;
         button = new ImageIcon(this.PathImage).getImage();
-        setBounds(this.posX, this.posY, button.getWidth(null), button.getHeight(null));
+
+        setBounds(this.posX - button.getWidth(null) / 2 - 32, this.posY, button.getWidth(null), button.getHeight(null));
+
         addMouseListener(this);
     }
 
@@ -48,7 +51,6 @@ public class JUButton extends JComponent implements MouseListener {
         String UpdatedPath = PathImage.substring(0, PathImage.length() - 7);
         UpdatedPath = UpdatedPath + "On.png";
         button = new ImageIcon(UpdatedPath).getImage(); //Cuando el mouse entre se actualiza la imagen
-        setBounds(this.posX, posY, button.getWidth(null), button.getHeight(null));
         repaint();
     }
 
@@ -59,7 +61,6 @@ public class JUButton extends JComponent implements MouseListener {
         UpdatedPath = UpdatedPath + "Off.png"; //Obtiene la imagen de acuerdo a la accion del mouse
         System.out.println(UpdatedPath);
         button = new ImageIcon(UpdatedPath).getImage(); //Cuando el mouse salga se actualiza la imagen
-        setBounds(this.posX, posY, button.getWidth(null), button.getHeight(null));
         repaint();
     }
 

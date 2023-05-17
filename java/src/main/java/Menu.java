@@ -8,15 +8,15 @@ public class Menu extends JComponent {
 
     public static JUButton buttonStart;
     public static JUButton buttonCredits;
-    private Image backGround;
-    private int imageWidth = 80;
+    private final Image backGround;
+    private int imageWidth = 150;
     public Menu(){
 
-        backGround = new ImageIcon("java/src/main/resources/BackgroundMenu/SKETCH BUTTONS.jpg").getImage();
+        backGround = new ImageIcon("java/src/main/resources/BackgroundMenu/SKETCH .jpg").getImage();
         setBounds(0, 0, Ventana.WIDTH, Ventana.HEIGHT);
 
-        buttonStart = new JUButton("java/src/main/resources/Buttons/StartOff.png", (Ventana.WIDTH / 2) - imageWidth, (200 + 100) * 2 - 300);
-        buttonCredits = new JUButton("java/src/main/resources/Buttons/CreditsOff.png", (Ventana.WIDTH / 2) - imageWidth, (200 + 100) * 3 - 300);
+        buttonStart = new JUButton("java/src/main/resources/Buttons/StartOff.png", Ventana.WIDTH / 2, (200 + 100) * 2 - 210);
+        buttonCredits = new JUButton("java/src/main/resources/Buttons/CreditsOff.png", Ventana.WIDTH / 2, (200 + 100) * 3 - 315);
 
         add(buttonStart);
         add(buttonCredits);
