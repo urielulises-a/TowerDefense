@@ -1,10 +1,7 @@
-import GameLogic.Path;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 public class JUButton extends JComponent implements MouseListener {
     private int posX, posY;
@@ -48,17 +45,19 @@ public class JUButton extends JComponent implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
 
-        String UpdatedPath = PathImage.substring(0, PathImage.length() - 7);
-        UpdatedPath = UpdatedPath + "On.png";
-        button = new ImageIcon(UpdatedPath).getImage(); //Cuando el mouse entre se actualiza la imagen
-        repaint();
+        imageSwitch("On.png");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
 
+        imageSwitch("Off.png");
+    }
+
+    private void imageSwitch(String currentState){
+
         String UpdatedPath = PathImage.substring(0, PathImage.length() - 7);
-        UpdatedPath = UpdatedPath + "Off.png"; //Obtiene la imagen de acuerdo a la accion del mouse
+        UpdatedPath = UpdatedPath + currentState; //Obtiene la imagen de acuerdo a la accion del mouse
         System.out.println(UpdatedPath);
         button = new ImageIcon(UpdatedPath).getImage(); //Cuando el mouse salga se actualiza la imagen
         repaint();
