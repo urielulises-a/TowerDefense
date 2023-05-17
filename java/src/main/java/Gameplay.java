@@ -2,7 +2,7 @@ public class Gameplay {
 
     public void startGame( ){
 
-        if(Menu.buttonPlay.isClicked())
+        if(Menu.buttonStart.isClicked())
             changeScene();
 
     }

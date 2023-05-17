@@ -83,6 +83,7 @@ public class Dogs extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+
         g.drawImage(dogImage, x, y, null);
     }
     
@@ -122,7 +123,7 @@ public class Dogs extends JComponent {
     }
 
     private void attack() {
-        Bullet bullet = new Bullet(this.getPosition(), typeBullet, this.target);
+        Bullet bullet = new Bullet(this.getPosition(), typeBullet);
         super.add(bullet);
     }
 

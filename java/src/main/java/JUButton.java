@@ -1,3 +1,5 @@
+import GameLogic.Path;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -7,13 +9,15 @@ import java.awt.event.MouseMotionListener;
 public class JUButton extends JComponent implements MouseListener {
     private int posX, posY;
     private boolean clicked;
+    private String PathImage;
     private Image button;
 
     public JUButton(String PathImage, int posX, int posY){
 
         this.posX = posX;
         this.posY = posY;
-        button = new ImageIcon("java/src/main/resources/Rust icon.png").getImage();
+        this.PathImage = PathImage;
+        button = new ImageIcon(this.PathImage).getImage();
         setBounds(this.posX, this.posY, button.getWidth(null), button.getHeight(null));
         addMouseListener(this);
     }
@@ -41,14 +45,20 @@ public class JUButton extends JComponent implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
 
-        button = new ImageIcon("java/src/main/resources/erigei.jpg").getImage();
+        String UpdatedPath = PathImage.substring(0, PathImage.length() - 7);
+        UpdatedPath = UpdatedPath + "On.png";
+        button = new ImageIcon(UpdatedPath).getImage(); //Cuando el mouse entre se actualiza la imagen
         setBounds(this.posX, posY, button.getWidth(null), button.getHeight(null));
         repaint();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        button = new ImageIcon("java/src/main/resources/Rust icon.png").getImage();
+
+        String UpdatedPath = PathImage.substring(0, PathImage.length() - 7);
+        UpdatedPath = UpdatedPath + "Off.png"; //Obtiene la imagen de acuerdo a la accion del mouse
+        System.out.println(UpdatedPath);
+        button = new ImageIcon(UpdatedPath).getImage(); //Cuando el mouse salga se actualiza la imagen
         setBounds(this.posX, posY, button.getWidth(null), button.getHeight(null));
         repaint();
     }

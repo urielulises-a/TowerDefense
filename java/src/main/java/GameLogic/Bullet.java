@@ -40,14 +40,14 @@ public class Bullet extends JComponent{
     private float damage,speed, rangeofDamage;
     private boolean active;
     
-    public Bullet(Point position, int typeOfBullet, Cats Target) {
+    public Bullet(Point position, int typeOfBullet) {
         this.position       = position;
 
         this.damage         = DogBulletCorrelation.get(typeOfBullet)[DAMAGE];
         this.speed          = DogBulletCorrelation.get(typeOfBullet)[SPEED];
         this.rangeofDamage  = DogBulletCorrelation.get(typeOfBullet)[RANGE_DAMAGE];
 
-        this.target = Target;
+        this.target = null;
 
         this.active = true;
     }
