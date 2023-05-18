@@ -1,13 +1,12 @@
 package GameLogic;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
+
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import main.Ventana;
 
@@ -18,12 +17,15 @@ public class Gameplay extends JComponent{
 
     private Levels nivel;                       // Variable en la que se instancia el nivel a jugar (Path para los gatos y los gatos a salir.)
 
+    private Timer runLevel;
+
     
     
     public Gameplay() {
         dogsInMap = new ArrayList<Dogs>();
         catsInMap = new ArrayList<Cats>();
         nivel = new Levels(0);
+        runLevel = new Timer("Run Level Timer");
         
         add(nivel);
 
@@ -31,35 +33,38 @@ public class Gameplay extends JComponent{
         setLayout(null);
     }
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        nivel.paintComponent(g);
 
-        for (Cats cats : catsInMap) {
-            cats.paintComponent(g);
-        }
-        for (Dogs dogs : dogsInMap) {
-            dogs.paintComponent(g);
-        }
 
-    }
+    public void run(){
+        
+        //nivel.startLevel();
+        
 
-    public void run() throws Exception{
-        while(true){
+        runLevel.schedule(new TimerTask() {
             
-            nivel.startLevel();
-            
-            Thread.sleep(100);
-            for (Cats cats : catsInMap) {
-                cats.update();
-            }
-            for (Dogs dogs : dogsInMap) {
-                dogs.update();
-            }
+            @Override
+            public void run() {
+                Cats newCat = new Cats(0, nivel.getPath());
+                catsInMap.add(newCat);
+                add(newCat);
+                setComponentZOrder(newCat, 0);
 
-            repaint();
-        }
+                for (Cats cats : catsInMap) {
+                    if(cats.isVisible() == false){
+                        remove(cats);
+                    }
+                }
+                
+                catsInMap.removeIf(Cats -> Cats.isVisible() == false);
+
+                System.out.println(getComponentCount());
+
+                
+            }
+            
+        }, 1000,1000);
+
+        
     }
 
 
@@ -74,12 +79,9 @@ public class Gameplay extends JComponent{
         
         frame.pack();        
         frame.setVisible(true);
+    
+        nuevoGameplay.run();
 
-        try {
-            nuevoGameplay.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         
     }
 
