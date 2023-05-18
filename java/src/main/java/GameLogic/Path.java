@@ -8,10 +8,11 @@ public class Path {
     private ArrayList<Point> points;
 
     public Path() {
-        points = new ArrayList<>();
+        points = new ArrayList<Point>();
     }
 
     public Path(Point[] Points){
+        points = new ArrayList<Point>();
         for (Point point : Points) {
             this.points.add(point);
         }
