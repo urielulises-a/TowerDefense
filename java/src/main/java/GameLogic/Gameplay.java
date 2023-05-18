@@ -1,6 +1,6 @@
 package GameLogic;
 import java.awt.Dimension;
-import java.awt.Graphics;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,51 +33,36 @@ public class Gameplay extends JComponent{
         setLayout(null);
     }
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        nivel.paintComponent(g);
 
-        for (Cats cats : catsInMap) {
-            cats.paintComponent(g);
-        }
-        for (Dogs dogs : dogsInMap) {
-            dogs.paintComponent(g);
-        }
-
-    }
 
     public void run(){
         
-        nivel.startLevel();
+        //nivel.startLevel();
         
 
         runLevel.schedule(new TimerTask() {
             
             @Override
             public void run() {
+                Cats newCat = new Cats(0, nivel.getPath());
+                catsInMap.add(newCat);
+                add(newCat);
+                setComponentZOrder(newCat, 0);
 
                 for (Cats cats : catsInMap) {
                     if(cats.isVisible() == false){
-                        nivel.remove(cats);
-                    }else{
-                        cats.update();
+                        remove(cats);
                     }
                 }
-                for (Dogs dogs : dogsInMap) {
-                    dogs.update();
-                }
-            
                 
-                if(catsInMap.size() == 0){
-                    System.out.println(catsInMap.size());
-                    runLevel.cancel();
-                }
+                catsInMap.removeIf(Cats -> Cats.isVisible() == false);
 
-                repaint();
+                System.out.println(getComponentCount());
+
+                
             }
             
-        }, 1000,100);
+        }, 1000,1000);
 
         
     }
