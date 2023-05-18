@@ -1,8 +1,7 @@
-import javax.imageio.ImageIO;
+package main;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class Menu extends JComponent {
 
@@ -20,11 +19,6 @@ public class Menu extends JComponent {
 
         add(buttonStart);
         add(buttonCredits);
-
-//        botonPlay = new JUButton("", 100, 100);
-        setBounds(0,0,Ventana.WIDTH, Ventana.HEIGHT);
-        // Instanciamiento boton play
-
     }
     @Override
     public void paintComponent(Graphics g){

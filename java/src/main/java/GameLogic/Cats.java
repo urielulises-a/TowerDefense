@@ -3,11 +3,14 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 
 
-public class Cats {
+
+public class Cats extends JComponent{
     private final int HEALTH = 0 , SPEED = 1, REWARD = 2, SKILL = 3;
-    private static final Map<Integer, Integer[]> CatSkillCorrelation = new HashMap<Integer, Integer[]>() {
+    private static final Map<Integer, Double[]> CatSkillCorrelation = new HashMap<Integer,Double[]>() {
         {
 
             // Relacion de Gato-Habilidad
@@ -19,57 +22,67 @@ public class Cats {
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0 , new Integer[] {0,0,0,0}); // Relacion de "Bastet"
-            put(1 , new Integer[] {0,0,0,0}); // Relacion de "Anubis"
-            put(2 , new Integer[] {0,0,0,0}); // Relacion de "Isis"
-            put(3 , new Integer[] {0,0,0,0}); // Relacion de "Horus"
-            put(4 , new Integer[] {0,0,0,0}); // Relacion de "Maahes"
-            put(5 , new Integer[] {0,0,0,0}); // Relacion de "Mafdet"
-            put(6 , new Integer[] {0,0,0,0}); // Relacion de "Mau"
-            put(7 , new Integer[] {0,0,0,0}); // Relacion de "Neftis"
-            put(8 , new Integer[] {0,0,0,0}); // Relacion de "Ra"
-            put(9 , new Integer[] {0,0,0,0}); // Relacion de "Sekhmet"
-            put(10, new Integer[] {0,0,0,0}); // Relacion de "Sobek"
-            put(11, new Integer[] {0,0,0,0}); // Relacion de "Thoth"
-            put(12, new Integer[] {0,0,0,0}); // Relacion de "Wadjet"
-            put(13, new Integer[] {0,0,0,0}); // Relacion de "Anput"
-            put(14, new Integer[] {0,0,0,0}); // Relacion de "Osiris"
+            put(0 , new Double[] {   100.0   ,   0.5   ,   100.0   ,   100.0}); // Relacion de "Bastet"
+            put(1 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Anubis"
+            put(2 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Isis"
+            put(3 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Horus"
+            put(4 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Maahes"
+            put(5 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Mafdet"
+            put(6 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Mau"
+            put(7 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Neftis"
+            put(8 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Ra"
+            put(9 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Sekhmet"
+            put(10, new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Sobek"
+            put(11, new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Thoth"
+            put(12, new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Wadjet"
+            put(13, new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Anput"
+            put(14, new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Osiris"
 
         }
     };
     
     private Point position;
-    private int health;
-    private int speed;
-    private int reward;
+    private Double health;
+    private Double speed;
+    private Double reward;
     private int currentPathIndex;
     private Path currentPath;
+    private Image catImage;
     
-    public Cats(Point position, int typeOfCat, Path path) {
-        this.position = position;
-        this.health = CatSkillCorrelation.get(typeOfCat)[HEALTH];
-        this.speed = CatSkillCorrelation.get(typeOfCat)[SPEED];
-        this.reward = CatSkillCorrelation.get(typeOfCat)[REWARD];
-        this.currentPathIndex = 0;
-        this.currentPath = path;
+    public Cats(int typeOfCat, Path path) {
+        this.position           = path.getPosition(0);
+        this.health             = CatSkillCorrelation.get(typeOfCat)[HEALTH];
+        this.speed              = CatSkillCorrelation.get(typeOfCat)[SPEED];
+        this.reward             = CatSkillCorrelation.get(typeOfCat)[REWARD];
+        this.currentPathIndex   = 1;
+        this.currentPath        = path;
+        this.catImage = new ImageIcon("java/src/main/resources/CharactersImages/Gato1.png").getImage();
     }
     
     public void update() {
-        if (currentPathIndex < currentPath.getLength()) {
-            Point nextPosition = currentPath.getPosition(currentPathIndex);
-            double distance = position.distance(nextPosition);
-            if (distance <= speed) {
-                position.setLocation(nextPosition);
+        if(currentPathIndex <= currentPath.getLength()){
+            double distance = position.distance(currentPath.getPosition(currentPathIndex));
+            if(distance <= speed){
+                position.setLocation(currentPath.getPosition(currentPathIndex));
                 currentPathIndex++;
-            } else {
-                double dx = nextPosition.getX() - position.getX();
-                double dy = nextPosition.getY() - position.getY();
-                double angle = Math.atan2(dy, dx);
-                int vx = (int) (Math.cos(angle) * speed);
-                int vy = (int) (Math.sin(angle) * speed);
-                position.translate(vx, vy);
+                System.out.println(currentPath.getPosition(currentPathIndex));
+            }else{
+                double dx = currentPath.getPosition(currentPathIndex).getX() - position.getX();
+                double dy = currentPath.getPosition(currentPathIndex).getY() - position.getY();
+                double magnitude = Math.sqrt(dx * dx + dy * dy);
+                double directionX = dx / magnitude;
+                double directionY = dy / magnitude;
+                double displacementX = directionX * speed;
+                double displacementY = directionY * speed;
+
+                this.position.translate((int)Math.round(displacementX), (int)Math.round(displacementY));
             }
         }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(catImage, (int)position.getX(), (int)position.getY(),null);        
     }
     
     public boolean isDead() {
@@ -88,7 +101,7 @@ public class Cats {
         return position;
     }
     
-    public int getReward() {
+    public double getReward() {
         return reward;
     }
 
