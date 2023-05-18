@@ -2,6 +2,8 @@ package GameLogic;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -9,7 +11,7 @@ import javax.swing.JComponent;
 
 
 public class Cats extends JComponent{
-    private final int HEALTH = 0 , SPEED = 1, REWARD = 2, SKILL = 3;
+    private final int HEALTH = 0 , SPEED = 1, REWARD = 2;
     private static final Map<Integer, Double[]> CatSkillCorrelation = new HashMap<Integer,Double[]>() {
         {
 
@@ -22,7 +24,7 @@ public class Cats extends JComponent{
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0 , new Double[] {   100.0   ,   0.5   ,   100.0   ,   100.0}); // Relacion de "Bastet"
+            put(0 , new Double[] {   100.0   ,   2.2   ,   100.0   ,   100.0}); // Relacion de "Bastet"
             put(1 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Anubis"
             put(2 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Isis"
             put(3 , new Double[] {  1.0   ,   1.0   ,   1.0   ,   1.0}); // Relacion de "Horus"
@@ -48,6 +50,10 @@ public class Cats extends JComponent{
     private int currentPathIndex;
     private Path currentPath;
     private Image catImage;
+    private Timer updateCats;
+
+    private static int CountOfCats = 0;
+
     
     public Cats(int typeOfCat, Path path) {
         this.position           = path.getPosition(0);
@@ -56,33 +62,52 @@ public class Cats extends JComponent{
         this.reward             = CatSkillCorrelation.get(typeOfCat)[REWARD];
         this.currentPathIndex   = 1;
         this.currentPath        = path;
+
         this.catImage = new ImageIcon("java/src/main/resources/CharactersImages/Gato1.png").getImage();
+
+        this.updateCats = new Timer("Update of cats");
+        Gameplay.catsInMap.add(this);
+        //this.update();
+        CountOfCats++;
     }
     
-    public void update() {
-        if(currentPathIndex <= currentPath.getLength()){
-            double distance = position.distance(currentPath.getPosition(currentPathIndex));
-            if(distance <= speed){
-                position.setLocation(currentPath.getPosition(currentPathIndex));
-                currentPathIndex++;
-                System.out.println(currentPath.getPosition(currentPathIndex));
-            }else{
-                double dx = currentPath.getPosition(currentPathIndex).getX() - position.getX();
-                double dy = currentPath.getPosition(currentPathIndex).getY() - position.getY();
-                double magnitude = Math.sqrt(dx * dx + dy * dy);
-                double directionX = dx / magnitude;
-                double directionY = dy / magnitude;
-                double displacementX = directionX * speed;
-                double displacementY = directionY * speed;
+    public void update(){
 
-                this.position.translate((int)Math.round(displacementX), (int)Math.round(displacementY));
-            }
-        }
+        // updateCats.schedule(new TimerTask() {
+
+        //     @Override
+        //     public void run() {
+                if(currentPathIndex <= currentPath.getLength()){
+            
+                    double distance = position.distance(currentPath.getPosition(currentPathIndex));
+                    if(distance <= speed){
+                        position.setLocation(currentPath.getPosition(currentPathIndex));
+                        currentPathIndex++;
+                        
+                    }else{
+                        double dx = currentPath.getPosition(currentPathIndex).getX() - position.getX();
+                        double dy = currentPath.getPosition(currentPathIndex).getY() - position.getY();
+                        double magnitude = Math.sqrt(dx * dx + dy * dy);
+                        double directionX = dx / magnitude;
+                        double directionY = dy / magnitude;
+                        double displacementX = directionX * speed;
+                        double displacementY = directionY * speed;
+        
+                        position.translate((int)Math.round(displacementX), (int)Math.round(displacementY));
+                    }
+                }else{
+                    setVisible(false);
+                }
+                
+        //     }
+            
+        // }, 1000, 100);
+        
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(catImage, (int)position.getX(), (int)position.getY(),null);        
+        g.drawImage(catImage, (int)Math.round(position.getX()), (int)Math.round(position.getY()),null);        
     }
     
     public boolean isDead() {

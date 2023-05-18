@@ -1,13 +1,12 @@
 package GameLogic;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import main.Ventana;
 
@@ -18,12 +17,15 @@ public class Gameplay extends JComponent{
 
     private Levels nivel;                       // Variable en la que se instancia el nivel a jugar (Path para los gatos y los gatos a salir.)
 
+    private Timer runLevel;
+
     
     
     public Gameplay() {
         dogsInMap = new ArrayList<Dogs>();
         catsInMap = new ArrayList<Cats>();
         nivel = new Levels(0);
+        runLevel = new Timer("Run Level Timer");
         
         add(nivel);
 
@@ -45,21 +47,39 @@ public class Gameplay extends JComponent{
 
     }
 
-    public void run() throws Exception{
-        while(true){
-            
-            nivel.startLevel();
-            
-            Thread.sleep(100);
-            for (Cats cats : catsInMap) {
-                cats.update();
-            }
-            for (Dogs dogs : dogsInMap) {
-                dogs.update();
-            }
+    public void run(){
+        
+        nivel.startLevel();
+        
 
-            repaint();
-        }
+        runLevel.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+
+                for (Cats cats : catsInMap) {
+                    if(cats.isVisible() == false){
+                        nivel.remove(cats);
+                    }else{
+                        cats.update();
+                    }
+                }
+                for (Dogs dogs : dogsInMap) {
+                    dogs.update();
+                }
+            
+                
+                if(catsInMap.size() == 0){
+                    System.out.println(catsInMap.size());
+                    runLevel.cancel();
+                }
+
+                repaint();
+            }
+            
+        }, 1000,100);
+
+        
     }
 
 
@@ -74,12 +94,9 @@ public class Gameplay extends JComponent{
         
         frame.pack();        
         frame.setVisible(true);
+    
+        nuevoGameplay.run();
 
-        try {
-            nuevoGameplay.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         
     }
 

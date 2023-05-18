@@ -1,15 +1,15 @@
 package GameLogic;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
-import main.Ventana;
 
 public class Levels extends JComponent{
 
@@ -47,14 +47,14 @@ public class Levels extends JComponent{
     private Path wayPath;
     private Image backgroundLevel;
     private int level;
+    private Timer spawnCats;
 
     public Levels(int Level) {
         this.level = Level;
         this.wayPath = new Path(correlationPathLevel.get(Level));
         this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/PruebaNivel1.jpg").getImage();
+        this.spawnCats = new Timer("Spawn of cats");
         
-        
-        // setBounds(0, 0, Ventana.WIDTH, Ventana.HEIGHT);
     }
 
     @Override
@@ -63,22 +63,33 @@ public class Levels extends JComponent{
         super.paint(g);
     }
 
-    public void startLevel() throws Exception{
+    public void startLevel(){
+
+        // spawnCats.schedule(new TimerTask() {
+
+        //     @Override
+        //     public void run() {
+
+                switch(level){
+                    case 0:
+                        Cats gatoNuevo = new Cats(0, wayPath);
+                        add(gatoNuevo);
+
+                        System.out.println(getComponentCount());
+
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        
+                }
 
 
-        switch(level){
-            case 0:
-                Cats gatoNuevo = new Cats(0, wayPath);
-                add(gatoNuevo);
-                Gameplay.catsInMap.add(gatoNuevo);
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                throw new Exception("Nivel no existente");
-        }
+        //     }
+            
+        // }, 0,5000);
 
         
     }
