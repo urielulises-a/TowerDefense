@@ -52,7 +52,7 @@ public class Gameplay extends JComponent {
                     cats.run();
                 }
 
-                catsInMap.removeIf(cats -> cats.isVisible() == false);
+                catsInMap.removeIf(cats -> !cats.isVisible());
                 repaint();
             }
         }, 0,10);

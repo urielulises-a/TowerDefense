@@ -84,8 +84,8 @@ public class Cats extends JComponent {
                 posY = (int) currentPath.getPosition(currentPathIndex).getY();
                 currentPathIndex++;
             } else {
-                double dx = currentPath.getPosition(currentPathIndex).getX() - getX();
-                double dy = currentPath.getPosition(currentPathIndex).getY() - getY();
+                double dx = currentPath.getPosition(currentPathIndex).getX() - posX;
+                double dy = currentPath.getPosition(currentPathIndex).getY() - posY;
                 double magnitude = Math.sqrt(dx * dx + dy * dy);
                 double directionX = dx / magnitude;
                 double directionY = dy / magnitude;
