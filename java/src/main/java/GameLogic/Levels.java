@@ -3,10 +3,8 @@ package GameLogic;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -29,7 +27,8 @@ public class Levels extends JComponent{
                                         new Point(500,490),
                                         new Point(860, 500),
                                         new Point(870,360),
-                                        new Point(1316, 342)
+                                        new Point(1316, 360),
+                                        new Point(1360,360)
                                     }); // Nivel 1 (Neighborhood)
 
             put(1 , new Point[] {   new Point(0,0),
@@ -47,18 +46,17 @@ public class Levels extends JComponent{
         }
     };
 
-    private Path wayPath;
+    private final Path wayPath;
     private Image backgroundLevel;
     private int level;
-    private Timer spawnCats;
-    private ArrayList<Cats> spawnCat;
+    private int countOfCycles;
 
     public Levels(int Level) {
-        this.spawnCat = new ArrayList<Cats>();
+        this.countOfCycles = 0;
         this.level = Level;
         this.wayPath = new Path(correlationPathLevel.get(Level));
         this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/PruebaNivel1.jpg").getImage();
-        this.spawnCats = new Timer("Spawn of cats");
+        
         setBounds(0, 0, Ventana.WIDTH, Ventana.HEIGHT);
         setVisible(true);
         setEnabled(true);
@@ -73,26 +71,16 @@ public class Levels extends JComponent{
    }
 
     public void startLevel(){
-        spawnCats.schedule(new TimerTask() {
 
-            @Override
-            public void run() {
-                
-                
-                spawnCat.add(new Cats(0, wayPath));
-                    
+        if(countOfCycles == 0 || countOfCycles == 500){
 
-            }
+            Cats newCat = new Cats(0, wayPath);
+            countOfCycles = 1;
+        }else{
+            countOfCycles++;
+        }
+
             
-        }, 0,5000);
-
-        
-    }
-
-
-
-    public Path getPath(){
-        return wayPath;
     }
 
 

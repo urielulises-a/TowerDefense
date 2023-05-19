@@ -21,10 +21,11 @@ public class Cats extends JComponent {
             // | 0 | 1 | 2 | 3 |
             // | Vida | velocidad de movimiento | Cantidad de recompensa | Tipo de habilidad
             // |
+            // |
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Double[] { 100.0, 10.0, 100.0, 100.0 }); // Relacion de "Bastet"
+            put(0, new Double[] { 100.0, 2.0, 100.0, 100.0 }); // Relacion de "Bastet"
             put(1, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Anubis"
             put(2, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Isis"
             put(3, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Horus"
@@ -43,85 +44,68 @@ public class Cats extends JComponent {
         }
     };
 
-    private Point position;
+    
+    private int posX, posY;
     private Double health;
     private Double speed;
     private Double reward;
     private int currentPathIndex;
-    private Path currentPath;
+    private final Path currentPath;
     private Image catImage;
-    private Timer updateCats;
     private static int countofcats = 0;
 
     public Cats(int typeOfCat, Path path) {
 
         setName("Gato " + countofcats);
 
-        this.position = path.getPosition(0);
+        this.posX = (int) path.getFirst().getX();
+        this.posY = (int) path.getFirst().getY();
 
-        this.health = CatSkillCorrelation.get(typeOfCat)[HEALTH];
-        this.speed = CatSkillCorrelation.get(typeOfCat)[SPEED];
-        this.reward = CatSkillCorrelation.get(typeOfCat)[REWARD];
+        this.health     = CatSkillCorrelation.get(typeOfCat)[HEALTH];
+        this.speed      = CatSkillCorrelation.get(typeOfCat)[SPEED];
+        this.reward     = CatSkillCorrelation.get(typeOfCat)[REWARD];
         this.currentPathIndex = 1;
         this.currentPath = path;
 
         this.catImage = new ImageIcon("java/src/main/resources/CharactersImages/Gato1.png").getImage();
 
-        this.updateCats = new Timer("Update of cats");
         Gameplay.catsInMap.add(this);
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                
-
-                updateCats.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        System.out.println("Ejecutando " + getName());
-                        if (currentPathIndex <= currentPath.getLength() - 1) {
-                            double distance = position.distance(currentPath.getPosition(currentPathIndex));
-                            if (distance <= speed) {
-                                position.setLocation(currentPath.getPosition(currentPathIndex));
-                                currentPathIndex++;
-                            } else {
-                                double dx = currentPath.getPosition(currentPathIndex).getX() - position.getX();
-                                double dy = currentPath.getPosition(currentPathIndex).getY() - position.getY();
-                                double magnitude = Math.sqrt(dx * dx + dy * dy);
-                                double directionX = dx / magnitude;
-                                double directionY = dy / magnitude;
-                                double displacementX = directionX * speed;
-                                double displacementY = directionY * speed;
-                                position.translate((int) Math.round(displacementX), (int) Math.round(displacementY));
-                            }
-                        } else {
-                            setVisible(false);
-                            updateCats.cancel();
-                            
-                        }
-                        setBounds(getX(), getY(), catImage.getWidth(null), catImage.getHeight(null));
-                        repaint();
-                    }
-                }, 1000, 100);
-            }
-        });
-
-        
-
-        thread.start();
-        
-
-        setBounds(path.getPosition(0).x, path.getPosition(0).y, catImage.getWidth(null), catImage.getHeight(null));
-        setLayout(null);
         countofcats++;
     }
 
+    public void run() {
+
+        System.out.println("Ejecutando " + getName());
+        
+        if (currentPathIndex <= currentPath.getLength() - 1) {
+            double distance = distance(currentPath.getPosition(currentPathIndex));
+            if (distance <= speed) {
+                posX = (int) currentPath.getPosition(currentPathIndex).getX();
+                posY = (int) currentPath.getPosition(currentPathIndex).getY();
+                currentPathIndex++;
+            } else {
+                double dx = currentPath.getPosition(currentPathIndex).getX() - getX();
+                double dy = currentPath.getPosition(currentPathIndex).getY() - getY();
+                double magnitude = Math.sqrt(dx * dx + dy * dy);
+                double directionX = dx / magnitude;
+                double directionY = dy / magnitude;
+                double displacementX = directionX * speed;
+                double displacementY = directionY * speed;
+                
+                posX += displacementX;
+                posY += displacementY;
+            }
+        } else {
+            setVisible(false);
+            countofcats--;
+        }
+
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(catImage, 0, 0, null);
+        g.drawImage(catImage, posX, posY, null);
     }
 
     public boolean isDead() {
@@ -132,24 +116,18 @@ public class Cats extends JComponent {
         health -= amount;
     }
 
-    public void setPosition(Point position) {
-        this.position = position;
+    private int distance(Point point){
+        int dx = (int) (point.getX() - posX);
+        int dy = (int) (point.getY() - posY);
+        return (int) Math.sqrt(dx * dx + dy * dy);
     }
 
-    public Point getPosition() {
-        return position;
+    public Point getPosition(){
+        return new Point(posX, posY);
     }
 
     public double getReward() {
         return reward;
-    }
-
-    public int getX() {
-        return (int) position.getX();
-    }
-
-    public int getY() {
-        return (int) position.getY();
     }
 
 }

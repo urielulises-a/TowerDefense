@@ -4,12 +4,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 
-public class Path {
-    private ArrayList<Point> points;
+public final class Path {
 
-    public Path() {
-        points = new ArrayList<Point>();
-    }
+    private final ArrayList<Point> points;
 
     public Path(Point[] Points){
         points = new ArrayList<Point>();
@@ -17,16 +14,15 @@ public class Path {
             this.points.add(point);
         }
     }
-    public void addPoint(int x, int y) {
-        points.add(new Point(x, y));
-    }
 
-    public void addPoint(Point pointToAdd){
-        points.add(pointToAdd);
-    }
+    @Override
+    public String toString() {
 
-    public int getLength() {
-        return points.size();
+        String toString = new String();
+        for (Point point : points) {
+            toString = toString + point + '\n';
+        }
+        return toString;
     }
 
     public Point getPosition(int index) {
@@ -34,6 +30,15 @@ public class Path {
             return points.get(index);
         }
         return null;
+    }
+
+    public Point getFirst(){
+        System.out.println(points.get(0));
+        return points.get(0);
+    }
+
+    public int getLength(){
+        return points.size();
     }
 
 
