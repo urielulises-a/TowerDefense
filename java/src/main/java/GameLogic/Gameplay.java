@@ -23,8 +23,9 @@ public class Gameplay extends JComponent {
 
 
     public Gameplay() {
-        dogsInMap = new ArrayList<Dogs>();
-        catsInMap = new ArrayList<Cats>();
+
+        dogsInMap = new ArrayList<>();
+        catsInMap = new ArrayList<>();
         nivel = new Levels(0);
         runLevel = new Timer("Run Level Timer");
 
@@ -43,6 +44,9 @@ public class Gameplay extends JComponent {
     }
 
     public void run() {
+
+
+//        nuevoGameplay.run();
 
         runLevel.schedule(new TimerTask() {
             @Override

@@ -11,14 +11,13 @@ public class Ventana extends JPanel {
     public final static int WIDTH = 1360;
     public final static int HEIGHT = 768;
     public Menu menu = new Menu();
-    public static Gameplay newGameplay = new Gameplay();
-    
+
     public Ventana() {
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         add(menu);
-        add(newGameplay);
+        //add(newGameplay);
         setLayout(null);
 
     }
@@ -26,7 +25,15 @@ public class Ventana extends JPanel {
 
         if (Menu.buttonStart.isClicked()){
 //            remove(menu);
-            newGameplay.run();
+            newScene();
         }
+    }
+    public static void newScene(){
+        Gameplay newGameplay = new Gameplay();
+        JFrame jf = new JFrame("Prueba");
+        jf.add(newGameplay);
+        jf.pack();
+        jf.setVisible(true);
+        newGameplay.run();
     }
 }
