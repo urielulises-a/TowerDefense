@@ -7,9 +7,8 @@ import java.awt.event.MouseListener;
 public class JUButton extends JComponent implements MouseListener {
     private int posX, posY;
     private boolean clicked;
-    private String PathImage;
+    private final String PathImage;
     private Image button;
-    private Image newButton;
 
     public JUButton(String PathImage, int posX, int posY){
 
@@ -36,7 +35,7 @@ public class JUButton extends JComponent implements MouseListener {
     public void mouseClicked(MouseEvent e) {
 
         clicked = true;
-        System.out.println("Mouse clicked");
+        Ventana.handleClick();
 
     }
     @Override
@@ -66,6 +65,5 @@ public class JUButton extends JComponent implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {}
-
 
 }

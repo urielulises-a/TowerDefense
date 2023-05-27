@@ -8,7 +8,6 @@ public class Menu extends JComponent {
     public static JUButton buttonStart;
     public static JUButton buttonCredits;
     private final Image backGround;
-    private int imageWidth = 150;
     public Menu(){
 
         backGround = new ImageIcon("java/src/main/resources/BackgroundMenu/SKETCH .jpg").getImage();
@@ -19,14 +18,12 @@ public class Menu extends JComponent {
 
         add(buttonStart);
         add(buttonCredits);
+
     }
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage(backGround, 0, 0, Ventana.WIDTH, Ventana.HEIGHT, null);
-
-    }
-    public void opciones(){
 
     }
 

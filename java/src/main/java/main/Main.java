@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Main extends JFrame {
 
-    Ventana ventana = new Ventana();
+    static Ventana ventana = new Ventana();
 
     public Main(){
 
@@ -14,7 +14,6 @@ public class Main extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
-        ventana.menu.opciones();
 
     }
 
