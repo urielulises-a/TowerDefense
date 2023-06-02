@@ -20,15 +20,14 @@ public class Levels extends JComponent{
             //  Al haber 3 niveles unicamente y con un camino ya previamente diseñado
             //  se tiene la posición de las coordenadas para autoinstanciar un camino para que los gatos puedan caminar.
 
-            put(0 , new Point[] {   new Point(0, 415),
-                                        new Point(215,415),
-                                        new Point(225,200),
-                                        new Point(500,200),
-                                        new Point(500,490),
-                                        new Point(860, 500),
-                                        new Point(870,360),
-                                        new Point(1316, 360),
-                                        new Point(1360,360)
+            put(0 , new Point[] {   new Point(0, 240),
+                                        new Point(250,250),
+                                        new Point(270,460),
+                                        new Point(360,550),
+                                        new Point(900,550),
+                                        new Point(930, 515),
+                                        new Point(955,300),
+                                        new Point(1230, 0)
                                     }); // Nivel 1 (Neighborhood)
 
             put(1 , new Point[] {   new Point(0,0),
@@ -55,7 +54,7 @@ public class Levels extends JComponent{
         this.countOfCycles = 0;
         this.level = Level;
         this.wayPath = new Path(correlationPathLevel.get(Level));
-        this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/PruebaNivel1.jpg").getImage();
+        this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/Nivel1.png").getImage();
         
         setBounds(0, 0, Ventana.WIDTH, Ventana.HEIGHT);
         setVisible(true);

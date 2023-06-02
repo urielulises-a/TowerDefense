@@ -1,11 +1,14 @@
 package main;
 
+import com.ecodeup.jdbc.DataBase;
+
 import javax.swing.*;
 
 
 public class Main extends JFrame {
 
     static Ventana ventana = new Ventana();
+    public DataBase dataBase = new DataBase();
 
     public Main(){
 
@@ -14,6 +17,7 @@ public class Main extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
+        dataBase.startData();
 
     }
 

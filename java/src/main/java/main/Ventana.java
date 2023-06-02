@@ -24,7 +24,6 @@ public class Ventana extends JPanel {
     public static void handleClick(){
 
         if (Menu.buttonStart.isClicked()){
-//            remove(menu);
             newScene();
         }
     }
@@ -35,5 +34,6 @@ public class Ventana extends JPanel {
         jf.pack();
         jf.setVisible(true);
         newGameplay.run();
+
     }
 }

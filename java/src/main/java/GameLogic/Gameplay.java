@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 import main.Ventana;
 
@@ -59,24 +58,24 @@ public class Gameplay extends JComponent {
                 catsInMap.removeIf(cats -> !cats.isVisible());
                 repaint();
             }
-        }, 0,10);
+        }, 0,60);
 
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Prueba");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-
-        Gameplay nuevoGameplay = new Gameplay();
-
-        frame.add(nuevoGameplay);
-
-        frame.pack();
-        frame.setVisible(true);
-
-        nuevoGameplay.run();
-
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("Prueba");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setResizable(false);
+//
+//        Gameplay nuevoGameplay = new Gameplay();
+//
+//        frame.add(nuevoGameplay);
+//
+//        frame.pack();
+//        frame.setVisible(true);
+//
+//        nuevoGameplay.run();
+//
+//    }
 
 }
