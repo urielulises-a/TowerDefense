@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class Main extends JFrame {
 
-    static Ventana ventana = new Ventana();
+    Ventana ventana = new Ventana(this);
     public DataBase dataBase = new DataBase();
 
     public Main(){
