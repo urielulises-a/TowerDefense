@@ -18,14 +18,12 @@ public class Cats extends JComponent {
             // La llave indica que gato es y que habilidades le corresponden
             // El array de enteros son los valores siendo de la siguiente manera por valores
             // del array (0,1,2,3...)
-            // | 0 | 1 | 2 | 3 |
-            // | Vida | velocidad de movimiento | Cantidad de recompensa | Tipo de habilidad
-            // |
-            // |
+            // | 0    | 1                       | 2                         |   3               |
+            // | Vida | velocidad de movimiento | Cantidad de recompensa    | Tipo de habilidad
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Double[] { 100.0, 2.0, 100.0, 100.0 }); // Relacion de "Bastet"
+            put(0, new Double[] { 100.0, 20.0, 100.0, 100.0 }); // Relacion de "Bastet"
             put(1, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Anubis"
             put(2, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Isis"
             put(3, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Horus"

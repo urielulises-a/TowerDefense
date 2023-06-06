@@ -45,8 +45,6 @@ public class Gameplay extends JComponent {
     public void run() {
 
 
-//        nuevoGameplay.run();
-
         runLevel.schedule(new TimerTask() {
             @Override
             public void run() {
