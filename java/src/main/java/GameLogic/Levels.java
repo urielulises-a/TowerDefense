@@ -2,8 +2,7 @@ package GameLogic;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
-import java.util.HashMap;
+
 
 
 import javax.swing.ImageIcon;

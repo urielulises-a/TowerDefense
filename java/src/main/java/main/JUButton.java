@@ -58,7 +58,6 @@ public class JUButton extends JComponent implements MouseListener {
 
         String UpdatedPath = PathImage.substring(0, PathImage.length() - 7);
         UpdatedPath = UpdatedPath + currentState; //Obtiene la imagen de acuerdo a la accion del mouse
-        System.out.println(UpdatedPath);
         button = new ImageIcon(UpdatedPath).getImage(); //Cuando el mouse salga se actualiza la imagen
         repaint();
     }

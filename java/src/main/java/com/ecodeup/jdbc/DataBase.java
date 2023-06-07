@@ -1,6 +1,5 @@
 package com.ecodeup.jdbc;
 
-import GameLogic.Gameplay;
 
 import java.sql.*;
 import java.util.Objects;

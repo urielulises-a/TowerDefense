@@ -13,7 +13,7 @@ public class Dogs extends JComponent {
 
     private final int RANGE = 0, ATAK_SPEED = 1, COST_PER_USE = 2, TYPE_BULLET = 3;
 
-    private static final Map<Integer, Integer[]> DogSkillCorrelation = new HashMap<Integer, Integer[]>() {
+    public static final Map<Integer, Integer[]> DogSkillCorrelation = new HashMap<Integer, Integer[]>() {
         {
 
             // Relacion de Perro-Habilidad

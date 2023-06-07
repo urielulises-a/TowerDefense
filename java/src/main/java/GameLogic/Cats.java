@@ -23,7 +23,7 @@ public class Cats extends JComponent {
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Double[] { 100.0, 20.0, 100.0, 100.0 }); // Relacion de "Bastet"
+            put(0, new Double[] { 100.0, 2.0, 100.0, 100.0 }); // Relacion de "Bastet"
             put(1, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Anubis"
             put(2, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Isis"
             put(3, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Horus"
@@ -72,8 +72,6 @@ public class Cats extends JComponent {
     }
 
     public void run() {
-
-        System.out.println("Ejecutando " + getName());
         
         if (currentPathIndex <= currentPath.getLength() - 1) {
             double distance = distance(currentPath.getPosition(currentPathIndex));

@@ -3,8 +3,6 @@ import GameLogic.Gameplay;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Ventana extends JPanel {
 
@@ -32,15 +30,19 @@ public class Ventana extends JPanel {
 
     }
     public static void newScene(){
-
-
-        Gameplay newGameplay = new Gameplay();
+        
+        
         JFrame jf = new JFrame("");
+        Gameplay newGameplay = new Gameplay();
         jf.add(newGameplay);
         jf.pack();
         jf.setVisible(true);
-
+        jf.setResizable(false);
+        jf.setSize(WIDTH, HEIGHT);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setLayout(null);
         newGameplay.run();
+
 
         frame.dispose();
     }
