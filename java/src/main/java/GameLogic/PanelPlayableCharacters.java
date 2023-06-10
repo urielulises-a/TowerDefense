@@ -51,9 +51,8 @@ public class PanelPlayableCharacters extends JPanel {
             }
         }
 
-        
         thisLevel.updateAvailableSpots(); // Actualizar los spots disponibles en Gameplay
-        
+
     }
 
     @Override
@@ -78,18 +77,25 @@ public class PanelPlayableCharacters extends JPanel {
             JToggleButton button = buttons.get(i);
             button.setIcon(new ImageIcon(new ImageIcon(Dogs.getDogImagePath(indexOfPlayableCharacters.get(i)))
                     .getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
-            button.setName(String.valueOf( indexOfPlayableCharacters.get(i) ));
+            button.setName(String.valueOf(indexOfPlayableCharacters.get(i)));
             // Se agrega de icono y de nombre al boton los valores elegidos por el usuario.
         }
     }
 
-    public int getIndexButtonSelected(){
+    public int getIndexButtonSelected() {
         for (JToggleButton button : buttons) {
             if (button.isSelected()) {
                 return Integer.parseInt(button.getName());
             }
         }
         return -1;
+    }
+
+    public void selectedFunctionReady() {
+        for (JToggleButton button : buttons) {
+            button.setSelected(false);
+        }
+        thisLevel.updateAvailableSpots();
     }
 
     public boolean isAnyButtonSelected() {

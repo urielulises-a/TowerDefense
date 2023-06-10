@@ -106,6 +106,7 @@ public class Levels extends JComponent implements MouseListener {
 
             Dogs newDog = new Dogs(TowerSpots.getPointInRange(level, getMousePosition()), PPC.getIndexButtonSelected());
             TowerSpots.changeSpotAvailability(level, getMousePosition(), false);
+            PPC.selectedFunctionReady();
         }
     }
 

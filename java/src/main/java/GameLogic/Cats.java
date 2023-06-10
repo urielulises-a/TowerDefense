@@ -4,7 +4,6 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
@@ -17,8 +16,8 @@ public class Cats extends JComponent {
             // La llave indica que gato es y que habilidades le corresponden
             // El array de enteros son los valores siendo de la siguiente manera por valores
             // del array (0,1,2,3...)
-            // | 0    | 1                       | 2                         |   3               |
-            // | Vida | velocidad de movimiento | Cantidad de recompensa    | Tipo de habilidad
+            // | 0 | 1 | 2 | 3 |
+            // | Vida | velocidad de movimiento | Cantidad de recompensa | Tipo de habilidad
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
@@ -41,7 +40,6 @@ public class Cats extends JComponent {
         }
     };
 
-    
     private int posX, posY;
     private Double health;
     private Double speed;
@@ -49,29 +47,29 @@ public class Cats extends JComponent {
     private int currentPathIndex;
     private final Path currentPath;
     private Image catImage;
-    private static int countofcats = 0;
+    private String pathCatImage = "java/src/main/resources/CharactersImages/Gato";
 
     public Cats(int typeOfCat, Path path) {
-
-        setName("Gato " + countofcats);
 
         this.posX = (int) path.getFirst().getX();
         this.posY = (int) path.getFirst().getY();
 
-        this.health     = CatSkillCorrelation.get(typeOfCat)[HEALTH];
-        this.speed      = CatSkillCorrelation.get(typeOfCat)[SPEED];
-        this.reward     = CatSkillCorrelation.get(typeOfCat)[REWARD];
+        this.health = CatSkillCorrelation.get(typeOfCat)[HEALTH];
+        this.speed = CatSkillCorrelation.get(typeOfCat)[SPEED];
+        this.reward = CatSkillCorrelation.get(typeOfCat)[REWARD];
         this.currentPathIndex = 1;
         this.currentPath = path;
 
-        this.catImage = new ImageIcon("java/src/main/resources/CharactersImages/Gato1.png").getImage();
+        setName(String.valueOf(typeOfCat));
+        this.catImage = new ImageIcon(pathCatImage + typeOfCat + ".png").getImage();
 
         Gameplay.catsInMap.add(this);
-        countofcats++;
     }
 
     public void run() {
-        
+        if (isDead()) {
+            setVisible(false);
+        }
         if (currentPathIndex <= currentPath.getLength() - 1) {
             double distance = distance(currentPath.getPosition(currentPathIndex));
             if (distance <= speed) {
@@ -86,21 +84,33 @@ public class Cats extends JComponent {
                 double directionY = dy / magnitude;
                 double displacementX = directionX * speed;
                 double displacementY = directionY * speed;
-                
+
                 posX += displacementX;
                 posY += displacementY;
             }
         } else {
             setVisible(false);
-            countofcats--;
         }
 
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        
+        // Ancho de la barra de vida actual
+        int barWidth = Math.min(
+        (int) (catImage.getWidth(null) * (health / CatSkillCorrelation.get(Integer.parseInt(getName()))[HEALTH]))
+        // Se obtiene el ancho de la barra haciendo una regla de 3, dividiendo la vida actual con la vida maxima
+        // Esto se multiplica por el ancho del imagen que es el ancho de la barra.
+        ,catImage.getWidth(null));   
+        // Esto se compara con el ancho de la barra por si termina siendo mayor, retorna el ancho y no sobre pasa el ancho de la imagen.     
+
         super.paintComponent(g);
         g.drawImage(catImage, posX, posY, null);
+        g.setColor(Color.RED);
+        g.fillRect(posX,  posY + (catImage.getHeight(null) - 10), catImage.getHeight(null), 10); // Dibujar barra vacía
+        g.setColor(Color.GREEN);
+        g.fillRect(posX,  posY + (catImage.getHeight(null) - 10), barWidth, 10); // Dibujar relleno de la barra de vida
     }
 
     public boolean isDead() {
@@ -109,17 +119,15 @@ public class Cats extends JComponent {
 
     public void damage(Double amount) {
         health -= amount;
-        System.out.println("Danio recivido, salud actual: " + health);
-
     }
 
-    private int distance(Point point){
+    private int distance(Point point) {
         int dx = (int) (point.getX() - posX);
         int dy = (int) (point.getY() - posY);
         return (int) Math.sqrt(dx * dx + dy * dy);
     }
 
-    public Point getPosition(){
+    public Point getPosition() {
         return new Point(posX, posY);
     }
 

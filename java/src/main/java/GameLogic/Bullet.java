@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.management.monitor.GaugeMonitor;
 import javax.swing.JComponent;
 
 public class Bullet extends JComponent {
@@ -21,7 +22,7 @@ public class Bullet extends JComponent {
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Zeus"
+            put(0, new Double[] { 10.0, 20.0, 100.0 }); // Relacion de "Zeus"
             put(1, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Persefone"
             put(2, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Ares"
             put(3, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Atenea"
@@ -42,7 +43,6 @@ public class Bullet extends JComponent {
     private Point position;
     private Cats target;
     private double damage, speed, rangeofDamage;
-    private boolean active;
 
     public Bullet(Point position, int typeOfBullet, Cats target) {
         this.position = position;
@@ -53,8 +53,6 @@ public class Bullet extends JComponent {
 
         this.target = target;
 
-        this.active = true;
-
         Gameplay.bulletsInMap.add(this);
     }
 
@@ -62,25 +60,30 @@ public class Bullet extends JComponent {
     protected void paintComponent(Graphics g) {
 
         super.paintComponent(g);
-        if (active) {
+        if (target != null) {
             g.setColor(Color.BLACK);
             g.fillRect((int) position.getX(), (int) position.getY(), 20, 20);
         }
     }
 
     public void update() {
-        if (active) {
+        if (target != null) {
             if (target.isDead()) {
-                Gameplay.catsInMap.remove(target);
                 this.target = null;
-                active = false; // Si el objetivo esta muerto se deshabilida la municion
             } else {
 
                 double distance = distance(target.getPosition());
                 if (distance <= speed) {
+                    synchronized(Gameplay.catsInMap){
                     position.x = (int) target.getPosition().getX();
                     position.y = (int) target.getPosition().getY();
-                    target.damage(damage);
+                    for (Cats cats : Gameplay.catsInMap) {
+                        if(distance(cats.getPosition()) <= rangeofDamage){
+                            cats.damage(damage);
+                        }
+                    }
+                    target = null;
+                }
                 } else {
                     double dx = target.getPosition().getX() - position.x;
                     double dy = target.getPosition().getY() - position.y;
@@ -98,16 +101,16 @@ public class Bullet extends JComponent {
     }
 
     public boolean isActive() {
-        return active;
+        return target != null;
     }
 
     public Point getPosition() {
         return position;
     }
 
-    public boolean hasReachedTarget() {
-        return position.equals(target.getPosition());
-    }
+    // public boolean hasReachedTarget() {
+    //     return position.equals(target.getPosition());
+    // }
 
     public Cats getTarget() {
         return target;

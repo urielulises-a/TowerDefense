@@ -3,6 +3,8 @@ package GameLogic;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Timer;
@@ -71,7 +73,14 @@ public class Dogs extends JComponent {
         // El tipo de municion que maneja el perro.
         this.typeBullet = DogSkillCorrelation.get(typeOfDog)[TYPE_BULLET];
 
-        this.attackCooldown = new Timer(attackSpeed, null);
+        this.attackCooldown = new Timer(attackSpeed, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized(Gameplay.bulletsInMap){
+                    attack();
+                }
+            }  
+        });
         this.attackCooldown.setRepeats(true);
 
         this.target = null;
@@ -94,14 +103,10 @@ public class Dogs extends JComponent {
             attackCooldown.stop();
             findTarget();
         } else {
-            if (isInRange(target)) {
-                if (attackCooldown.getDelay() <= 0) {
-                    attack();
-                    attackCooldown.restart();
-                }
-            } else {
+            if (!isInRange(target)) {
                 target = null;
             }
+            
         }
     }
 

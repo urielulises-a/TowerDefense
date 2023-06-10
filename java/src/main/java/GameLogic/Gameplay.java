@@ -11,6 +11,14 @@ import javax.swing.JOptionPane;
 
 import main.Ventana;
 
+// TODO Agregar sonidos
+// TODO Refinar niveles
+// TODO Terminar de configurar perros y gatos
+// TODO ¿Animaciones entre niveles? (Explicacion de la historia)
+// TODO Cambio de nivel (dejar de hardcodear el nivel)
+// TODO IMAGENES
+// TODO Agregar que se pueda perder.
+
 public class Gameplay extends JComponent {
 
     public static ArrayList<Dogs> dogsInMap;            // Variable para saber los perros que hay en juego
