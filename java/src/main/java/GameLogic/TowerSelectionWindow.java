@@ -1,7 +1,6 @@
 package GameLogic;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -28,8 +27,7 @@ public class TowerSelectionWindow extends JFrame {
         setLayout(new GridLayout(3, 5));
 
         for (int i = 0; i < listOfCharactersToPlay.length; i++) {
-            String characterImagePath = "java/src/main/resources/CharactersImages/Perro" + i + ".png";
-            listOfCharactersToPlay[i] = createCharacterButton(characterImagePath, i);
+            listOfCharactersToPlay[i] = createCharacterButton(i);
             add(listOfCharactersToPlay[i]);
         }
 
@@ -40,8 +38,8 @@ public class TowerSelectionWindow extends JFrame {
         
     }
 
-    private JButton createCharacterButton(String imagePath, int characterIndex) {
-        JButton button = new JButton(new ImageIcon(new ImageIcon(imagePath)
+    private JButton createCharacterButton(int characterIndex) {
+        JButton button = new JButton(new ImageIcon(new ImageIcon(Dogs.getDogImagePath(characterIndex))
                 .getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 
         button.addActionListener(new ActionListener() {
@@ -61,7 +59,7 @@ public class TowerSelectionWindow extends JFrame {
 
                 if (indexSelected.size() >= 4) {
                     JOptionPane.showMessageDialog(null, "Has seleccionado los personajes requeridos.");
-                    Gameplay.CharactersSelected = true;
+                    Levels.CharactersSelected = true;
                 }
             }
         });

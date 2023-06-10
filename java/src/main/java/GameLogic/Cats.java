@@ -3,8 +3,7 @@ package GameLogic;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -108,8 +107,10 @@ public class Cats extends JComponent {
         return health <= 0;
     }
 
-    public void damage(int amount) {
+    public void damage(Double amount) {
         health -= amount;
+        System.out.println("Danio recivido, salud actual: " + health);
+
     }
 
     private int distance(Point point){
