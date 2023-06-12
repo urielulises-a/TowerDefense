@@ -26,5 +26,4 @@ public class Menu extends JComponent {
         g.drawImage(backGround, 0, 0, Ventana.WIDTH, Ventana.HEIGHT, null);
 
     }
-
 }

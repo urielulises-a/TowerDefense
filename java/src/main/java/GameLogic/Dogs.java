@@ -3,6 +3,8 @@ package GameLogic;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Timer;
@@ -13,23 +15,23 @@ public class Dogs extends JComponent {
 
     private final int RANGE = 0, ATAK_SPEED = 1, COST_PER_USE = 2, TYPE_BULLET = 3;
 
-    private static final Map<Integer, Integer[]> DogSkillCorrelation = new HashMap<Integer, Integer[]>() {
+    public static final Map<Integer, Integer[]> DogSkillCorrelation = new HashMap<Integer, Integer[]>() {
         {
 
             // Relacion de Perro-Habilidad
             // La llave indica que perro es y que habilidades le corresponden
             // El array de enteros son los valores siendo de la siguiente manera por valores
             // del array (0,1,2,3...)
-            // |   0   |           1           |         2         |         3         |
-            // | Rango |  velocidad de ataque  |  Costo por Usarse |  Tipo de municion |
+            // |   0   |           1           |         2         |         3         |        4       |
+            // | Rango |  velocidad de ataque  |  Costo por Usarse |  Tipo de municion | Nombre imagen  |
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0 , new Integer[] {0,0,0,0}); // Relacion de "Zeus"
-            put(1 , new Integer[] {0,0,0,0}); // Relacion de "Persefone"
-            put(2 , new Integer[] {0,0,0,0}); // Relacion de "Ares"
-            put(3 , new Integer[] {0,0,0,0}); // Relacion de "Atenea"
-            put(4 , new Integer[] {0,0,0,0}); // Relacion de "Hades"
+            put(0 , new Integer[] {200,1000,0,0}); // Relacion de "Zeus"
+            put(1 , new Integer[] {100,0,0,0}); // Relacion de "Persefone"
+            put(2 , new Integer[] {400,0,0,0}); // Relacion de "Ares"
+            put(3 , new Integer[] {300,0,0,0}); // Relacion de "Atenea"
+            put(4 , new Integer[] {50,0,0,0}); // Relacion de "Hades"
             put(5 , new Integer[] {0,0,0,0}); // Relacion de "Hera"
             put(6 , new Integer[] {0,0,0,0}); // Relacion de "Hermes"
             put(7 , new Integer[] {0,0,0,0}); // Relacion de "Cerbero"
@@ -48,13 +50,14 @@ public class Dogs extends JComponent {
     private int typeBullet;
     private Cats target;
     private Image dogImage;
+    private static String dogImagePath = "java/src/main/resources/CharactersImages/Perro";
 
     public Dogs(Point position, int dogOption) {
 
-        this.dogImage = new ImageIcon("java/src/main/resources/beware.jpg").getImage();
+        this.dogImage = new ImageIcon(dogImagePath + dogOption + ".png").getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT);
 
-        this.x = (int) position.getX();
-        this.y = (int) position.getY();
+        this.x = (int) position.getX() - 45;
+        this.y = (int) position.getY() - 45;
 
         this.typeOfDog = dogOption;
 
@@ -70,7 +73,14 @@ public class Dogs extends JComponent {
         // El tipo de municion que maneja el perro.
         this.typeBullet = DogSkillCorrelation.get(typeOfDog)[TYPE_BULLET];
 
-        this.attackCooldown = new Timer(attackSpeed, null);
+        this.attackCooldown = new Timer(attackSpeed, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized(Gameplay.bulletsInMap){
+                    attack();
+                }
+            }  
+        });
         this.attackCooldown.setRepeats(true);
 
         this.target = null;
@@ -79,6 +89,7 @@ public class Dogs extends JComponent {
         setBounds(x, y, dogImage.getWidth(null), dogImage.getHeight(null));
         setEnabled(true);
         setVisible(true);
+        setName(String.valueOf(dogOption));
     }
 
     @Override
@@ -88,18 +99,14 @@ public class Dogs extends JComponent {
     }
     
     public void update() {
-        if (target == null) {
+        if (target == null || target.isDead()) {
             attackCooldown.stop();
             findTarget();
         } else {
-            if (isInRange(target)) {
-                if (attackCooldown.getDelay() <= 0) {
-                    attack();
-                    attackCooldown.restart();
-                }
-            } else {
+            if (!isInRange(target)) {
                 target = null;
             }
+            
         }
     }
 
@@ -123,8 +130,7 @@ public class Dogs extends JComponent {
     }
 
     private void attack() {
-        Bullet bullet = new Bullet(this.getPosition(), typeBullet);
-        super.add(bullet);
+        Bullet bullet = new Bullet(this.getPosition(), typeBullet, target);
     }
 
     private double getDistance(Point a, Point b) {
@@ -139,6 +145,10 @@ public class Dogs extends JComponent {
 
     public int getCostPerUse(){
         return costPerUse;
+    }
+
+    public static String getDogImagePath(int typeDog){
+        return dogImagePath + typeDog + ".png";
     }
 
 }

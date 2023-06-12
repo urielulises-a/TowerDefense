@@ -1,6 +1,5 @@
 package com.ecodeup.jdbc;
 
-import GameLogic.Gameplay;
 
 import java.sql.*;
 import java.util.Objects;
@@ -17,7 +16,7 @@ public class DataBase {
 
     private  final String SQLurl = "jdbc:mysql://localhost:3306/tower?serverTimezone=UTC";
     private final String SQLuser = "root";
-    private final String SQLpassword = "31415";
+    private final String SQLpassword = "CacadeVaca230403";
     public void startData(){
 
         username = "nombre2";
@@ -80,7 +79,8 @@ public class DataBase {
 
         preparedStatement = connection.prepareStatement("INSERT INTO usuario VALUES (?,?,?)");
 
-        //TODO hacer que el id no se pueda repetir, es decir dar un id nuevo adecuado al usuario
+        // TODO hacer que el id no se pueda repetir, es decir dar un id nuevo adecuado al usuario 
+        // TODO * ANSWER: Se puede hacer una variable incrementable con cada ingreso de datos en mySQL, o al menos eso vi en un video xd.
         preparedStatement.setInt(1, 2);
         preparedStatement.setString(2, username);
         preparedStatement.setInt(3, 1);

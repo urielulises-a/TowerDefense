@@ -1,90 +1,130 @@
 package GameLogic;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.HashMap;
-
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.Timer;
 
 import main.Ventana;
 
-
-public class Levels extends JComponent{
-
-    private final HashMap<Integer, Point[]> correlationPathLevel = new HashMap<Integer, Point[]>() {
-        {
-
-            //  Al haber 3 niveles unicamente y con un camino ya previamente diseñado
-            //  se tiene la posición de las coordenadas para autoinstanciar un camino para que los gatos puedan caminar.
-
-            put(0 , new Point[] {   new Point(0, 240),
-                                        new Point(250,250),
-                                        new Point(270,460),
-                                        new Point(360,550),
-                                        new Point(900,550),
-                                        new Point(930, 515),
-                                        new Point(955,300),
-                                        new Point(1230, 0)
-                                    }); // Nivel 1 (Neighborhood)
-
-            put(1 , new Point[] {   new Point(0,0),
-                                        new Point(0,0),
-                                        new Point(0,0),
-                                        new Point(0,0)
-                                    }); // Nivel 2 ()
-                                    
-            put(2 , new Point[] {   new Point(0,0),
-                                        new Point(0,0),
-                                        new Point(0,0),
-                                        new Point(0,0)
-                                    }); // Nivel 3 (Hell)
-            
-        }
-    };
+public class Levels extends JComponent implements MouseListener {
 
     private final Path wayPath;
     private Image backgroundLevel;
     private int level;
-    private int countOfCycles;
+    private ArrayList<HashMap<Point, Boolean>> availableSpots;
+    private PanelPlayableCharacters PPC;                        // Panel para creacion de nuevas torres dentro del gamplay.
+
+    public static boolean CharactersSelected = false;           // Variable de control para no empezar el nivel hasta que se hayan
+                                                                // seleccionado los personajes.
 
     public Levels(int Level) {
-        this.countOfCycles = 0;
         this.level = Level;
-        this.wayPath = new Path(correlationPathLevel.get(Level));
-        this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/Nivel1.png").getImage();
-        
+        this.wayPath = new Path(Level);
+        this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/Nivel" + (Level + 1) + ".jpg").getImage();
+        PPC = new PanelPlayableCharacters(this);
+        add(PPC);
+
         setBounds(0, 0, Ventana.WIDTH, Ventana.HEIGHT);
         setVisible(true);
         setEnabled(true);
         setLayout(null);
-        
-        
+        addMouseListener(this);
+
     }
 
-   @Override
-   protected void paintComponent(Graphics g) {
-       g.drawImage(backgroundLevel, 0, 0,null);
-   }
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(backgroundLevel, 0, 0, null);
 
-    public void startLevel(){
+        if (availableSpots != null) {
+            g.setColor(Color.YELLOW);
+            for (HashMap<Point, Boolean> spot : availableSpots) {
+                for (Point point : spot.keySet()) {
+                    if (spot.get(point)) {
+                        int x = (int) point.getX();
+                        int y = (int) point.getY();
+                        g.fillOval(x - 45, y - 45, 90, 90);
 
-        if(countOfCycles == 0 || countOfCycles == 500){
-
-            Cats newCat = new Cats(0, wayPath);
-            countOfCycles = 1;
-        }else{
-            countOfCycles++;
+                    }
+                }
+            }
         }
+    }
 
-            
+    public void startLevel() {
+        Timer releaseNewCat = new Timer(5000, (e) -> {
+            synchronized (Gameplay.catsInMap) {
+                Cats newCat = new Cats(0, wayPath);
+            }
+        });
+
+        releaseNewCat.setInitialDelay(5000);
+        releaseNewCat.start();
+    }
+
+    public void setAvailableSpots(ArrayList<HashMap<Point, Boolean>> spots) {
+        availableSpots = spots;
+        repaint();
+    }
+
+    public void updateAvailableSpots() {
+        if (PPC.isAnyButtonSelected()) {
+            ArrayList<HashMap<Point, Boolean>> spots = TowerSpots.correlationTowersSpotAvailable.get(level);
+            setAvailableSpots(spots);
+        } else {
+            setAvailableSpots(null); // Si no hay botones seleccionados, no hay spots disponibles
+        }
+    }
+
+    public void setIndexSelectedCharacters(ArrayList<Integer> indexOfSelectedCharacters){
+        if(indexOfSelectedCharacters != null){
+            PPC.setButtons(indexOfSelectedCharacters);
+        }
+    }
+
+    public int getLevel() {
+        return this.level;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(PPC.isAnyButtonSelected()                                                
+        // Al dar click se verificara si hay un personaje seleccionado para introducir al mapa
+        && TowerSpots.isInSpotRange(level, getMousePosition())                                                              
+        // Si el click esta dentro de un spot para un nuevo perro
+        && TowerSpots.isSpotAvailable(level, TowerSpots.getPointInRange(level, getMousePosition(CharactersSelected)))){
+        // Si el spot esta disponible para introducir un nuevo perro
+
+            Dogs newDog = new Dogs(TowerSpots.getPointInRange(level, getMousePosition()), PPC.getIndexButtonSelected());
+            TowerSpots.changeSpotAvailability(level, getMousePosition(), false);
+            PPC.selectedFunctionReady();
+        }
     }
 
 
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
 
-    
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
 
-    
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
 }
