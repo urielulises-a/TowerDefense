@@ -8,8 +8,7 @@ public class DataBase {
 
     int id;
     String username;
-    int level;
-
+    static int level;
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
@@ -31,9 +30,9 @@ public class DataBase {
                 System.out.println("Si existe ");
             }
 
-            connection.close();
-            preparedStatement.close();
-            resultSet.close();
+//            connection.close();
+//            preparedStatement.close();
+//            resultSet.close();
 
         }catch (SQLException exception){
 
@@ -42,12 +41,10 @@ public class DataBase {
 
 
     }
-    //TODO El nombre del usuario se va a ingresar como un string (puede ser por parámetro o alguna otra manera)
     public boolean userExists() throws SQLException{
 
 
             connection = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword);
-//            statement = connection.createStatement();
 
             preparedStatement = connection.prepareStatement("SELECT * FROM USUARIO WHERE nombre=?"); //Busqueda de dado usuario
 
@@ -56,12 +53,12 @@ public class DataBase {
 
 //            ResultSet resultSet = statement.executeQuery( " SELECT * FROM usuario");
 
-
             while (resultSet.next()){
 
                 String userSearch = resultSet.getString("nombre");
 
                 if (Objects.equals(userSearch, username)){
+                    id = resultSet.getInt(1);
                     level = resultSet.getInt(3);
                     return true;
                 }
@@ -80,13 +77,22 @@ public class DataBase {
 
         preparedStatement = connection.prepareStatement("INSERT INTO usuario VALUES (?,?,?)");
 
-        // TODO hacer que el id no se pueda repetir, es decir dar un id nuevo adecuado al usuario 
-        // Answer Se puede hacer una variable incrementable con cada ingreso de datos en mySQL, o al menos eso vi en un video xd.
-        preparedStatement.setInt(1, 2);
+        preparedStatement.setString(1, "0");
         preparedStatement.setString(2, username);
-        preparedStatement.setInt(3, 1);
+        preparedStatement.setInt(3, 0);
         preparedStatement.executeUpdate();
 
     }
+    public void updateUser(int newLevel) throws SQLException{
 
+        //TODO se tiene que cerrar la conexion de la base de datos
+        preparedStatement = connection.prepareStatement("UPDATE usuario SET progreso = ? WHERE idusuario = " + id);
+
+        preparedStatement.setInt(1, newLevel);
+        preparedStatement.executeUpdate();
+//
+//        connection.close();
+//        preparedStatement.close();
+//        resultSet.close();
+    }
 }
