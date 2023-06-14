@@ -3,6 +3,7 @@ package GameLogic;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -16,26 +17,26 @@ public class Cats extends JComponent {
             // La llave indica que gato es y que habilidades le corresponden
             // El array de enteros son los valores siendo de la siguiente manera por valores
             // del array (0,1,2,3...)
-            // | 0 | 1 | 2 | 3 |
-            // | Vida | velocidad de movimiento | Cantidad de recompensa | Tipo de habilidad
+            // | 0      |           1               |            2          |         3 
+            // | Vida   | velocidad de movimiento   | Cantidad de recompensa| Tipo de habilidad
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Double[] { 100.0, 2.0, 100.0, 100.0 }); // Relacion de "Bastet"
-            put(1, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Anubis"
-            put(2, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Isis"
-            put(3, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Horus"
-            put(4, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Maahes"
-            put(5, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Mafdet"
-            put(6, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Mau"
-            put(7, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Neftis"
-            put(8, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Ra"
-            put(9, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Sekhmet"
-            put(10, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Sobek"
-            put(11, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Thoth"
-            put(12, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Wadjet"
-            put(13, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Anput"
-            put(14, new Double[] { 1.0, 1.0, 1.0, 1.0 }); // Relacion de "Osiris"
+            put(0, new Double[]     { 100.0 , 2.0   , 25.0  , 100.0 }); // Relacion de "Bastet"
+            put(1, new Double[]     { 100.0 , 2.0   , 50.0  , 1.0   }); // Relacion de "Anubis"
+            put(2, new Double[]     { 100.0 , 2.0   , 75.0  , 1.0   }); // Relacion de "Isis"
+            put(3, new Double[]     { 100.0 , 2.0   , 100.0 , 1.0   }); // Relacion de "Horus"
+            put(4, new Double[]     { 100.0 , 1.0   , 150.0 , 1.0   }); // Relacion de "Maahes"
+            put(5, new Double[]     { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Mafdet"
+            put(6, new Double[]     { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Mau"
+            put(7, new Double[]     { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Neftis"
+            put(8, new Double[]     { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Ra"
+            put(9, new Double[]     { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Sekhmet"
+            put(10, new Double[]    { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Sobek"
+            put(11, new Double[]    { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Thoth"
+            put(12, new Double[]    { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Wadjet"
+            put(13, new Double[]    { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Anput"
+            put(14, new Double[]    { 1.0   , 1.0   , 1.0   , 1.0   }); // Relacion de "Osiris"
 
         }
     };
@@ -47,9 +48,12 @@ public class Cats extends JComponent {
     private int currentPathIndex;
     private final Path currentPath;
     private Image catImage;
-    private String pathCatImage = "java/src/main/resources/CharactersImages/Gato";
+    private String pathCatImage = "java/src/main/resources/CharactersImages/Gatos/";
 
     public Cats(int typeOfCat, Path path) {
+        if(typeOfCat > 14){
+            typeOfCat = 14;
+        }
 
         this.posX = (int) path.getFirst().getX();
         this.posY = (int) path.getFirst().getY();
@@ -59,15 +63,16 @@ public class Cats extends JComponent {
         this.reward = CatSkillCorrelation.get(typeOfCat)[REWARD];
         this.currentPathIndex = 1;
         this.currentPath = path;
+        this.catImage = new ImageIcon(pathCatImage + typeOfCat + ".png").getImage().getScaledInstance(60, 85, Image.SCALE_DEFAULT);
 
         setName(String.valueOf(typeOfCat));
-        this.catImage = new ImageIcon(pathCatImage + typeOfCat + ".png").getImage();
 
         Gameplay.catsInMap.add(this);
     }
 
     public void run() {
         if (isDead()) {
+            Levels.addToRewards(reward);
             setVisible(false);
         }
         if (currentPathIndex <= currentPath.getLength() - 1) {
@@ -90,6 +95,7 @@ public class Cats extends JComponent {
             }
         } else {
             setVisible(false);
+            Levels.reduceHealthOfPlayer((int)(reward * 10));
         }
 
     }
@@ -106,9 +112,12 @@ public class Cats extends JComponent {
         // Esto se compara con el ancho de la barra por si termina siendo mayor, retorna el ancho y no sobre pasa el ancho de la imagen.     
 
         super.paintComponent(g);
+
         g.drawImage(catImage, posX, posY, null);
+
+        // Barra de vida
         g.setColor(Color.RED);
-        g.fillRect(posX,  posY + (catImage.getHeight(null) - 10), catImage.getHeight(null), 10); // Dibujar barra vacía
+        g.fillRect(posX,  posY + (catImage.getHeight(null) - 10), catImage.getWidth(null), 10); // Dibujar barra vacía
         g.setColor(Color.GREEN);
         g.fillRect(posX,  posY + (catImage.getHeight(null) - 10), barWidth, 10); // Dibujar relleno de la barra de vida
     }
@@ -135,4 +144,8 @@ public class Cats extends JComponent {
         return reward;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

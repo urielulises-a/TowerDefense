@@ -4,7 +4,6 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.management.monitor.GaugeMonitor;
 import javax.swing.JComponent;
 
 public class Bullet extends JComponent {
@@ -22,7 +21,7 @@ public class Bullet extends JComponent {
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Double[] { 10.0, 20.0, 100.0 }); // Relacion de "Zeus"
+            put(0, new Double[] { 10.0, 20.0, 1.0 }); // Relacion de "Zeus"
             put(1, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Persefone"
             put(2, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Ares"
             put(3, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Atenea"

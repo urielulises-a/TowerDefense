@@ -80,7 +80,7 @@ public class DataBase {
         preparedStatement = connection.prepareStatement("INSERT INTO usuario VALUES (?,?,?)");
 
         // TODO hacer que el id no se pueda repetir, es decir dar un id nuevo adecuado al usuario 
-        // TODO * ANSWER: Se puede hacer una variable incrementable con cada ingreso de datos en mySQL, o al menos eso vi en un video xd.
+        // Answer Se puede hacer una variable incrementable con cada ingreso de datos en mySQL, o al menos eso vi en un video xd.
         preparedStatement.setInt(1, 2);
         preparedStatement.setString(2, username);
         preparedStatement.setInt(3, 1);
