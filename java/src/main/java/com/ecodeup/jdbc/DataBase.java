@@ -6,11 +6,11 @@ import java.util.Objects;
 
 public class DataBase {
 
-    int id;
+    static int id;
     String username;
     static int level;
-    Connection connection;
-    PreparedStatement preparedStatement;
+    static Connection connection;
+    static PreparedStatement preparedStatement;
     ResultSet resultSet;
 
     private  final String SQLurl = "jdbc:mysql://localhost:3306/tower?serverTimezone=UTC";
@@ -83,7 +83,7 @@ public class DataBase {
         preparedStatement.executeUpdate();
 
     }
-    public void updateUser(int newLevel) throws SQLException{
+    static public void updateUser(int newLevel) throws SQLException{
 
         //TODO se tiene que cerrar la conexion de la base de datos
         preparedStatement = connection.prepareStatement("UPDATE usuario SET progreso = ? WHERE idusuario = " + id);
