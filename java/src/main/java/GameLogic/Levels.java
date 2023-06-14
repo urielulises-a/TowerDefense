@@ -56,7 +56,7 @@ public class Levels extends JComponent implements MouseListener {
     private PanelPlayableCharacters PPC;
 
     public Levels(int Level) {
-        System.out.println("Nuevo nivel:" + Level);
+
         this.level = Level;
         Levels.healthOfPlayer = this.HEALTH_MAX;
         Levels.rewardsEarned = 100;

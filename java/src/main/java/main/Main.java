@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ShortLookupTable;
+import java.sql.SQLException;
 
 public class Main extends JFrame {
 
@@ -15,7 +15,7 @@ public class Main extends JFrame {
     private CardLayout cardLayout;
     private UserMenu userMenu;
     private Ventana ventana;
-    private DataBase dataBase;
+    private static DataBase dataBase;
 
     public Main() {
         cardPanel = new JPanel();
@@ -49,7 +49,6 @@ public class Main extends JFrame {
         });
 
     }
-
     public static void main(String[] args) {
         Main main = new Main();
         main.setVisible(true);

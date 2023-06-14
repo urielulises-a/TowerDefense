@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.xml.crypto.Data;
 
 import com.ecodeup.jdbc.DataBase;
 
@@ -171,6 +172,8 @@ public class Gameplay extends JComponent {
     public void nextLevel() {
 
         int nextLevel = actualLevel.getLevel() + 1;
+
+
         for (Dogs dog : dogsInMap) {
             dog.stopAtack();
         }
@@ -179,12 +182,10 @@ public class Gameplay extends JComponent {
         catsInMap.clear();
         bulletsInMap.clear();
         
-        
         panelCreated = false;
         TSW = new TowerSelectionWindow(nextLevel);
         
         remove(actualLevel);
-        System.out.println("Nivel a enviar: " + (nextLevel));
         actualLevel = new Levels(nextLevel);
         add(actualLevel);
     }
