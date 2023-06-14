@@ -115,7 +115,7 @@ public class Gameplay extends JComponent {
 
                 }
 
-                if (TowerSelectionWindow.CharactersSelected && !actualLevel.isLevelComplete()) {
+                if (TowerSelectionWindow.CharactersSelected) {
 
                     actualLevel.levelLogic();
 

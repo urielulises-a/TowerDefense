@@ -39,6 +39,7 @@ public class Ventana extends JPanel {
         jf.setVisible(true);
         jf.setResizable(false);
         jf.setSize(WIDTH, HEIGHT);
+        jf.setLocationRelativeTo(null);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setLayout(null);
         newGameplay.run();
