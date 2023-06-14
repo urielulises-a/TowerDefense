@@ -4,7 +4,6 @@ import main.Ventana;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserMenu extends JPanel {
@@ -39,4 +38,6 @@ public class UserMenu extends JPanel {
     public void clearInputText() {
         textField.setText("");
     }
+
+
 }

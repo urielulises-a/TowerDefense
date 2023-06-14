@@ -5,6 +5,9 @@ import com.ecodeup.jdbc.DataBase;
 import javax.swing.*;
 
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.ShortLookupTable;
 
 public class Main extends JFrame {
 
@@ -33,14 +36,16 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        userMenu.addActionListener(e -> {
-            String input = userMenu.getInputText();
-
-            System.out.println("Dato ingresado: " + input);
-            userMenu.clearInputText();  //
-            cardLayout.show(cardPanel, "Ventana");
-            ventana.requestFocus();
-            dataBase.startData(input);
+        userMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = userMenu.getInputText();
+                System.out.println(input);
+                userMenu.clearInputText();
+                cardLayout.show(cardPanel, "Ventana");
+                ventana.requestFocus();
+                dataBase.startData(input);
+            }
         });
 
     }
@@ -50,3 +55,4 @@ public class Main extends JFrame {
         main.setVisible(true);
     }
 }
+
