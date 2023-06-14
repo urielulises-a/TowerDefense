@@ -17,9 +17,9 @@ public class DataBase {
     private  final String SQLurl = "jdbc:mysql://localhost:3306/tower?serverTimezone=UTC";
     private final String SQLuser = "root";
     private final String SQLpassword = "CacadeVaca230403";
-    public void startData(){
+    public void startData(String username){
 
-        username = "nombre2";
+        this.username = username;
 
         try{
 
@@ -87,4 +87,5 @@ public class DataBase {
         preparedStatement.executeUpdate();
 
     }
+
 }

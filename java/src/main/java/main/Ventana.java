@@ -1,5 +1,6 @@
 package main;
 import GameLogic.Gameplay;
+import GameLogic.UserMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class Ventana extends JPanel {
         Ventana.frame = frame;
 
         add(menu);
-        //add(newGameplay);
+
         setLayout(null);
 
     }
