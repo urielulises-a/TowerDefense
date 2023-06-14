@@ -10,7 +10,7 @@ public class Menu extends JComponent {
     private final Image backGround;
     public Menu(){
 
-        backGround = new ImageIcon("java/src/main/resources/BackgroundMenu/SKETCH .jpg").getImage();
+        backGround = new ImageIcon("java/src/main/resources/BackgroundMenu/Menu.png").getImage();
         setBounds(0, 0, Ventana.WIDTH, Ventana.HEIGHT);
 
         buttonStart = new JUButton("java/src/main/resources/Buttons/StartOff.png", Ventana.WIDTH / 2, (200 + 100) * 2 - 210);
