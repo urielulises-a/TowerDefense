@@ -2,13 +2,15 @@ package GameLogic;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+
+import com.ecodeup.jdbc.DataBase;
 
 import main.Ventana;
 
@@ -20,31 +22,31 @@ import main.Ventana;
 // [ ] - IMAGENES
 // [x] - Agregar que se pueda perder.
 
-public class Gameplay extends JComponent{
+public class Gameplay extends JComponent {
 
-    public static ArrayList<Dogs> dogsInMap;            // Variable para saber los perros que hay en juego
-    public static ArrayList<Cats> catsInMap;            // Variable para saber los gatos que hay en juego
-    public static ArrayList<Bullet> bulletsInMap;       // Variable para saber las municiones que hay en juego
-    private Levels actualLevel;                               // Variable en la que se instancia el nivel a jugar (Path para los gatos y los
-                                                        // gatos a salir.)
-    private Timer runLevel;                             // Timer para renovar el gamplay a 60 FPS
-    private TowerSelectionWindow TSW;                   // Seleccion de perros de inicio
-    private boolean panelCreated = false;               // Variable de control 
+    public static ArrayList<Dogs> dogsInMap; // Variable para saber los perros que hay en juego
+    public static ArrayList<Cats> catsInMap; // Variable para saber los gatos que hay en juego
+    public static ArrayList<Bullet> bulletsInMap; // Variable para saber las municiones que hay en juego
+    private Levels actualLevel; // Variable en la que se instancia el nivel a jugar (Path para los gatos y los
+    // gatos a salir.)
+    private Timer runLevel; // Timer para renovar el gamplay a 60 FPS
+    private TowerSelectionWindow TSW; // Seleccion de perros de inicio
+    private boolean panelCreated = false; // Variable de control
 
 
     public Gameplay() {
 
-        dogsInMap       = new ArrayList<>();
-        catsInMap       = new ArrayList<>();
-        bulletsInMap    = new ArrayList<>();
+        dogsInMap = new ArrayList<>();
+        catsInMap = new ArrayList<>();
+        bulletsInMap = new ArrayList<>();
         actualLevel = new Levels(0);
         runLevel = new Timer("Run Level Timer");
 
         setPreferredSize(new Dimension(Ventana.WIDTH, Ventana.HEIGHT));
         setLayout(null);
-        
-        TSW = new TowerSelectionWindow(0);
-        
+
+        TSW = new TowerSelectionWindow(actualLevel.getLevel());
+
         add(actualLevel);
     }
 
@@ -65,40 +67,40 @@ public class Gameplay extends JComponent{
 
     public void run() {
         TSW.toFront();
-        
+
         runLevel.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(Levels.getHealthOfPlayer() <= 0){
-                
-                    if(dogsInMap.size() > 0){
+                if (Levels.getHealthOfPlayer() <= 0) {
+
+                    if (dogsInMap.size() > 0) {
                         dogsInMap.clear();
-                    }if(catsInMap.size() > 0){
+                    }
+                    if (catsInMap.size() > 0) {
                         catsInMap.clear();
-                    }if(bulletsInMap.size() > 0){
+                    }
+                    if (bulletsInMap.size() > 0) {
                         bulletsInMap.clear();
                     }
-                    
-                    repaint();
-                    this.cancel();
 
                     int choice = JOptionPane.showOptionDialog(getTopLevelAncestor(), "¡Has perdido!",
-                                    "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                                    new String[]{"Salir.", "Reiniciar Nivel"}, "Salir.");
+                            "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                            new String[] { "Salir.", "Reiniciar Nivel" }, "Salir.");
 
                     if (choice == JOptionPane.YES_OPTION) {
-                        //  Volver al menú principal
+                        // Volver al menú principal
                         System.exit(0);
                     } else if (choice == JOptionPane.NO_OPTION) {
                         // Reiniciar el nivel
-                    }                
+                        resetLevel();
+                    }
                 }
 
-                if(actualLevel.isLevelComplete() && catsInMap.size() <= 0){
+                if (actualLevel.isLevelComplete() && catsInMap.size() <= 0) {
 
                     int choice = JOptionPane.showOptionDialog(getTopLevelAncestor(), "¡Nivel superado!",
-                                    "¿Siguiente nivel?", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                                    new String[]{"Salir.", "Siguiente Nivel"}, "Salir.");
+                            "¿Siguiente nivel?", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                            new String[] { "Salir.", "Siguiente Nivel" }, "Salir.");
 
                     if (choice == JOptionPane.YES_OPTION) {
                         // Salir.
@@ -106,12 +108,9 @@ public class Gameplay extends JComponent{
                         System.exit(0);
                     } else if (choice == JOptionPane.NO_OPTION) {
                         // Siguiente nivel
-                        dogsInMap.clear();
-                        catsInMap.clear();
-                        bulletsInMap.clear();
+                        nextLevel();
 
-
-                    } 
+                    }
 
                 }
 
@@ -119,42 +118,82 @@ public class Gameplay extends JComponent{
 
                     actualLevel.levelLogic();
 
-                    if(!panelCreated){
+                    if (!panelCreated) {
                         actualLevel.setIndexSelectedCharacters(TSW.getSelectedCharacters());
-                        TSW.dispose();
                         panelCreated = true;
                     }
-                    synchronized(catsInMap){
+                    synchronized (catsInMap) {
                         for (Cats cats : catsInMap) {
                             cats.run();
                         }
-                    }synchronized(dogsInMap){
+                    }
+                    synchronized (dogsInMap) {
                         for (Dogs dogs : dogsInMap) {
                             dogs.update();
                         }
-                    }synchronized(bulletsInMap){
+                    }
+                    synchronized (bulletsInMap) {
                         for (Bullet bullets : bulletsInMap) {
                             bullets.update();
                         }
                     }
 
-                    
-
                     catsInMap.removeIf(cats -> !cats.isVisible());
                     repaint();
-                    
+
                 }
-                
-                
+
             }
         }, 0, 16);
-   
-    }
-
-    public void nextLevel(){
 
     }
 
-    
+    public void resetLevel() {
+        for (Dogs dog : dogsInMap) {
+            dog.stopAtack();
+        }
+
+        dogsInMap.clear();
+        catsInMap.clear();
+        bulletsInMap.clear();
+        
+
+        TowerSpots.resetSpots(actualLevel.getLevel());
+        panelCreated = false;
+        TSW = new TowerSelectionWindow(actualLevel.getLevel());
+        
+        remove(actualLevel);
+
+        actualLevel = new Levels(actualLevel.getLevel());
+        add(actualLevel);
+
+    }
+
+    public void nextLevel() {
+
+        int nextLevel = actualLevel.getLevel() + 1;
+
+
+        for (Dogs dog : dogsInMap) {
+            dog.stopAtack();
+        }
+
+        dogsInMap.clear();
+        catsInMap.clear();
+        bulletsInMap.clear();
+        
+        try {
+            DataBase.updateUser(nextLevel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        panelCreated = false;
+        TSW = new TowerSelectionWindow(nextLevel);
+        
+        remove(actualLevel);
+        actualLevel = new Levels(nextLevel);
+        add(actualLevel);
+    }
 
 }

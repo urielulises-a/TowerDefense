@@ -34,8 +34,8 @@ public class Levels extends JComponent implements MouseListener {
             // Dificultad maxima de gato (0-14) |
 
             put(0, new Integer[] { 20, 3500, 4 }); // Nivel 1 Neighborhood
-            put(1, new Integer[] { 30, 2000, 9 }); // Nivel 2
-            put(2, new Integer[] { 50, 1000, 14 }); // Nivel 3 Hell
+            put(1, new Integer[] { 30, 1000, 9 }); // Nivel 2
+            put(2, new Integer[] { 50, 500, 14 }); // Nivel 3 Hell
 
         }
     };
@@ -56,6 +56,8 @@ public class Levels extends JComponent implements MouseListener {
     private PanelPlayableCharacters PPC;
 
     public Levels(int Level) {
+
+        this.level = Level;
         Levels.healthOfPlayer = this.HEALTH_MAX;
         Levels.rewardsEarned = 100;
         this.levelComplete = false;
@@ -64,7 +66,6 @@ public class Levels extends JComponent implements MouseListener {
         this.enemiesToGenerate = levelCorrelationGenerator.get(level)[NUM_ENEMIES_TO_GENERATE];
         this.delayGeneration = levelCorrelationGenerator.get(level)[DELAY_GENERATION];
         this.enemyDifficulty = levelCorrelationGenerator.get(level)[MAXIMUM_ENEMY_DIFFICULTY];
-        this.level = Level;
         this.wayPath = new Path(Level);
         this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/Nivel " + (Level + 1) + ".png").getImage();
         this.PPC = new PanelPlayableCharacters(this);
@@ -196,7 +197,7 @@ public class Levels extends JComponent implements MouseListener {
         if (Gameplay.dogsInMap.size() > 0) {
             for (Dogs dogs : Gameplay.dogsInMap) {
                 if (dogs.clickInDog(getMousePosition())) {
-                    
+                    TowerSpots.changeSpotAvailability(level, dogs.getPosition(), true);
                     dogs.setSelected(true);
                     dogs.dogsOptions.show(this, e.getX(), e.getY());
                     

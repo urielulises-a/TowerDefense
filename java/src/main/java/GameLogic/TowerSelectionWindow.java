@@ -21,6 +21,7 @@ public class TowerSelectionWindow extends JFrame {
                                                           // seleccionado los personajes.
 
     public TowerSelectionWindow(int level) {
+        TowerSelectionWindow.CharactersSelected = false;
         listOfCharactersToPlay = new JButton[14]; // 14 personajes jugables
         indexSelected = new ArrayList<Integer>();
 
@@ -30,7 +31,7 @@ public class TowerSelectionWindow extends JFrame {
         setLayout(new GridLayout(3, 5));
 
         for (int i = 0; i < listOfCharactersToPlay.length; i++) {
-            listOfCharactersToPlay[i] = createCharacterButton(i);
+            listOfCharactersToPlay[i] = createCharacterButton(i, level + 1);
             add(listOfCharactersToPlay[i]);
         }
 
@@ -43,9 +44,11 @@ public class TowerSelectionWindow extends JFrame {
         
     }
 
-    private JButton createCharacterButton(int characterIndex) {
+    private JButton createCharacterButton(int characterIndex, int level) {
+        JFrame actualFrame = this;
         JButton button = new JButton(new ImageIcon(new ImageIcon(Dogs.getDogImagePath(characterIndex))
                 .getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        button.setText(Dogs.getCostOfDog(characterIndex));
 
         button.addActionListener(new ActionListener() {
             private boolean isSelected = false;
@@ -65,12 +68,19 @@ public class TowerSelectionWindow extends JFrame {
                 if (indexSelected.size() >= 4) {
                     JOptionPane.showMessageDialog(getOwner(), "Has seleccionado los personajes requeridos.");
                     CharactersSelected = true;
+                    actualFrame.dispose();
+                    
                 }
             }
         });
 
+        if(characterIndex > ((level * 4) + (level - 1))){
+            button.setEnabled(false);
+        }
+
         return button;
     }
+    
 
     public ArrayList<Integer> getSelectedCharacters() {
         return indexSelected;
