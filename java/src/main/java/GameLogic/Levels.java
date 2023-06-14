@@ -126,7 +126,6 @@ public class Levels extends JComponent implements MouseListener {
 
                 synchronized (Gameplay.catsInMap) {
                     if (enemiesGenerated < enemiesToGenerate) {
-                        System.out.println(enemyDifficulty);
                         Cats newCat = new Cats((int) (Math.random() * enemyDifficulty), wayPath);
                         enemiesGenerated++;
                     } else {

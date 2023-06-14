@@ -2,13 +2,13 @@ package GameLogic;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.xml.crypto.Data;
 
 import com.ecodeup.jdbc.DataBase;
 
@@ -181,6 +181,12 @@ public class Gameplay extends JComponent {
         dogsInMap.clear();
         catsInMap.clear();
         bulletsInMap.clear();
+        
+        try {
+            DataBase.updateUser(nextLevel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
         panelCreated = false;
         TSW = new TowerSelectionWindow(nextLevel);

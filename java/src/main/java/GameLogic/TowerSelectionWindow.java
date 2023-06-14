@@ -75,7 +75,6 @@ public class TowerSelectionWindow extends JFrame {
         });
 
         if(characterIndex > ((level * 4) + (level - 1))){
-            System.out.println((level * 4) + (level - 1));
             button.setEnabled(false);
         }
 
