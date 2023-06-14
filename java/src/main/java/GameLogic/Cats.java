@@ -113,13 +113,13 @@ public class Cats extends JComponent {
 
         super.paintComponent(g);
 
-        g.drawImage(catImage, posX, posY, null);
+        g.drawImage(catImage, posX - 30, posY - 42, null);
 
         // Barra de vida
         g.setColor(Color.RED);
-        g.fillRect(posX,  posY + (catImage.getHeight(null) - 10), catImage.getWidth(null), 10); // Dibujar barra vacía
+        g.fillRect(posX - 30,  posY + (catImage.getHeight(null) - 10) - 42, catImage.getWidth(null), 10); // Dibujar barra vacía
         g.setColor(Color.GREEN);
-        g.fillRect(posX,  posY + (catImage.getHeight(null) - 10), barWidth, 10); // Dibujar relleno de la barra de vida
+        g.fillRect(posX - 30,  posY + (catImage.getHeight(null) - 10) - 42, barWidth, 10); // Dibujar relleno de la barra de vida
     }
 
     public boolean isDead() {

@@ -21,16 +21,19 @@ public class TowerSpots {
                     add(new HashMap<Point, Boolean>() {{    put(new Point(1010, 120), true);    }});
                 }
             });
-            put(1, new ArrayList<HashMap<Point, Boolean>>() {   //  Spots para torres del nivel 2 ()
+            put(1, new ArrayList<HashMap<Point, Boolean>>() {   //  Spots para torres del nivel 2 (Cemetery)
                 {
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(165, 530), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(295, 405), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(400, 660), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(625,440), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(670, 670), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(870, 350), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(930, 540), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(1015, 345), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(1245, 540), true); }});
+                    add(new HashMap<Point, Boolean>() {{    put(new Point(1180, 180), true); }});
+
                 }
             });
             put(2, new ArrayList<HashMap<Point, Boolean>>() {   // Spots para torres del nivel 3 

@@ -1,15 +1,21 @@
 package GameLogic;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 public class Dogs extends JComponent {
 
@@ -34,26 +40,28 @@ public class Dogs extends JComponent {
             put(4, new Integer[] { 50, 0, 0, 0 }); // Relacion de "Hades"
             put(5, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Hera"
             put(6, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Hermes"
-            put(7, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Cerbero"
+            put(7, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Cerbero"S
             put(8, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Perseo"
             put(9, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Triton"
-            put(10, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Hebe"
+            put(10, new Integer[] { 0, 0, 0, 0 }); // Relacion deS "Hebe"
             put(11, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Cronos"
             put(12, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Teseo"
             put(13, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Demeter"
 
         }
     };
-
+    private boolean isSelected;
     private int x, y, range, attackSpeed, typeOfDog, costPerUse;
-    private Timer attackCooldown;
     private int typeBullet;
+    public JPopupMenu dogsOptions;
+    private Timer attackCooldown;
     private Cats target;
     private Image dogImage;
     private static String dogImagePath = "java/src/main/resources/CharactersImages/Perros/";
 
     public Dogs(Point position, int dogOption) {
 
+        this.isSelected = false;
         this.dogImage = new ImageIcon(dogImagePath + dogOption + ".png").getImage().getScaledInstance(90, 90,
                 Image.SCALE_DEFAULT);
 
@@ -86,20 +94,57 @@ public class Dogs extends JComponent {
         this.attackCooldown.setInitialDelay(0);
         this.attackCooldown.setRepeats(true);
 
+        this.dogsOptions = setupMenu();
+
         this.target = null;
 
         Gameplay.dogsInMap.add(this); // Cada que se instancia un nuevo perro se agrega al array de los perros dentro
                                       // del mapa
+
         setBounds(x, y, dogImage.getWidth(null), dogImage.getHeight(null));
         setEnabled(true);
         setVisible(true);
         setName(String.valueOf(dogOption));
     }
 
+    private JPopupMenu setupMenu() {
+        JPopupMenu menu = new JPopupMenu("Opciones");
+        JMenuItem eliminarOpcion = new JMenuItem("Eliminar perro");
+        Dogs currentDog = this;
+
+        // Agregar ActionListener a cada elemento de menú
+        eliminarOpcion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized(Gameplay.dogsInMap){
+                    Gameplay.dogsInMap.remove(currentDog);
+                    currentDog.attackCooldown.stop();
+                }
+                isSelected = false;
+            }
+        });
+
+        menu.add(eliminarOpcion);
+
+
+        return menu;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
         super.paintComponent(g);
+
+        if (isSelected) {
+            g2d.setColor(new Color(255, 0, 0, 128)); // Amarillo opaco (con transparencia)
+            int x = (int) getX();
+            int y = (int) getY();
+            g2d.fillOval(x - 45, y - 45, 90, 90);
+        }
+
         g.drawImage(dogImage, x - 45, y - 45, null);
+
     }
 
     public void update() {
@@ -163,8 +208,17 @@ public class Dogs extends JComponent {
         return String.valueOf(DogSkillCorrelation.get(typeDog)[Dogs.COST_PER_USE]);
     }
 
-    public void stopAttackcooldown() {
-        this.attackCooldown.stop();
+    public void setSelected(boolean Selected) {
+        this.isSelected = Selected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public boolean clickInDog(Point click) {
+        return (click.getX() >= getX() - 45 && click.getX() <= getX() + 45
+                && click.getY() >= getY() - 45 && click.getY() <= getY() + 45);
     }
 
 }

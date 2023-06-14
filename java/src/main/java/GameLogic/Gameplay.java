@@ -20,7 +20,7 @@ import main.Ventana;
 // [ ] - IMAGENES
 // [x] - Agregar que se pueda perder.
 
-public class Gameplay extends JComponent {
+public class Gameplay extends JComponent{
 
     public static ArrayList<Dogs> dogsInMap;            // Variable para saber los perros que hay en juego
     public static ArrayList<Cats> catsInMap;            // Variable para saber los gatos que hay en juego
@@ -44,7 +44,7 @@ public class Gameplay extends JComponent {
         setLayout(null);
         
         TSW = new TowerSelectionWindow(0);
-
+        
         add(actualLevel);
     }
 
@@ -149,21 +149,6 @@ public class Gameplay extends JComponent {
             }
         }, 0, 16);
    
-    }
-
-    public static int indexDogInPoint(Point pointToCompare){
-        Point copyOfPoint = pointToCompare;
-
-        copyOfPoint.x -= 45;
-        copyOfPoint.y -= 45;
-        // Se les resta 45 por efecto del constructor de Dog
-
-        for (Dogs dogs : dogsInMap) {
-            if(dogs.getPosition().equals(copyOfPoint)){
-                return dogsInMap.indexOf(dogs);
-            }
-        }
-        return -1;
     }
 
     public void nextLevel(){

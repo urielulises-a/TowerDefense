@@ -15,22 +15,39 @@ public final class Path {
 
         put(0 , new ArrayList<Point>(Arrays.asList(
                     
-                    new Point(0, 165),
-                    new Point(245,160),
-                    new Point(260,430),
-                    new Point(410,520),
-                    new Point(850,530),
-                    new Point(935, 465),
-                    new Point(960,300),
-                    new Point(1230, 0)
+                    new Point(0, 210),
+                    new Point(290,210),
+                    new Point(290,430),
+                    new Point(340, 505),
+                    new Point(400,560),
+                    new Point(635, 560),
+                    new Point(880,560),
+                    new Point(980, 460),
+                    new Point(1000,300),
+                    new Point(1100, 190),
+                    new Point(1190, 90),
+                    new Point(1265, 0)
         )));// )); // Nivel 1 (Neighborhood)
 
         put(1 , new ArrayList<Point>(Arrays.asList(   
-                                    new Point(0,0),
-                                    new Point(0,0),
-                                    new Point(0,0),
-                                    new Point(0,0)
-                                ))); // Nivel 2 ()
+                    new Point(100,768),
+                    new Point(165, 680),
+                    new Point(270, 600),
+                    new Point(400, 470),
+                    new Point(480, 390),
+                    new Point(540,330),
+                    new Point(665,325),
+                    new Point(745,375),
+                    new Point(790, 600),
+                    new Point(920, 660),
+                    new Point(1050, 635),
+                    new Point(1120,475),
+                    new Point(1125, 335),
+                    new Point(1060, 200),
+                    new Point(1085, 75),
+                    new Point(1220, 60),
+                    new Point(1360, 65)
+        ))); // Nivel 2 (Cemetery)
                                 
         put(2 , new ArrayList<Point>(Arrays.asList(  
                                     new Point(0,0),
