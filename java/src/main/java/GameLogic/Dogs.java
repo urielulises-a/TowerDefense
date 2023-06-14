@@ -214,6 +214,10 @@ public class Dogs extends JComponent {
         return isSelected;
     }
 
+    public void stopAtack(){
+        this.attackCooldown.stop();
+    }
+
     public boolean clickInDog(Point click) {
         return (click.getX() >= getX() - 45 && click.getX() <= getX() + 45
                 && click.getY() >= getY() - 45 && click.getY() <= getY() + 45);

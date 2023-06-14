@@ -106,4 +106,13 @@ public class TowerSpots {
         }
         return null;
     }
+
+    public static void resetSpots(int level){
+         ArrayList<HashMap<Point, Boolean>> spots = TowerSpots.correlationTowersSpotAvailable.get(level);
+        for (HashMap<Point, Boolean> spot : spots) {
+            for (Point point : spot.keySet()) {
+                changeSpotAvailability(level, point,true);
+            }
+        }
+    }
 }
