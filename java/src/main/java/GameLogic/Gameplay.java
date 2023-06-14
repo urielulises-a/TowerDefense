@@ -102,7 +102,7 @@ public class Gameplay extends JComponent {
 
                     if (choice == JOptionPane.YES_OPTION) {
                         // Salir.
-                        JOptionPane.showMessageDialog(getTopLevelAncestor(), "Saliendo de MythPets.");
+                        JOptionPane.showMessageDialog(getTopLevelAncestor(), "Saliendo de MithPets.");
                         System.exit(0);
                     } else if (choice == JOptionPane.NO_OPTION) {
                         // Siguiente nivel
@@ -115,7 +115,7 @@ public class Gameplay extends JComponent {
 
                 }
 
-                if (TowerSelectionWindow.CharactersSelected && !actualLevel.isLevelComplete()) {
+                if (TowerSelectionWindow.CharactersSelected) {
 
                     actualLevel.levelLogic();
 

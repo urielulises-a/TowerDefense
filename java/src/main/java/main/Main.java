@@ -17,6 +17,7 @@ public class Main extends JFrame {
         setSize(Ventana.WIDTH, Ventana.HEIGHT);
         setResizable(false);
         setVisible(true);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         dataBase.startData();
