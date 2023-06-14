@@ -29,7 +29,7 @@ public class PanelPlayableCharacters extends JPanel {
             characterButton.setBorderPainted(false); // Sin bordes
             characterButton.setContentAreaFilled(false); // Sin fondo
             characterButton.setOpaque(false); // Fondo transparente.
-            characterButton.setFocusPainted(false); // Sin fijar la seleccion (Codigo personalizado para el mismo fin)
+            characterButton.setFocusPainted(false); // Sin fijar la selección (Código personalizado para el mismo fin)
 
             characterButton.addActionListener(new ActionListener() {
                 @Override
@@ -44,7 +44,6 @@ public class PanelPlayableCharacters extends JPanel {
     }
 
     private void handleButtonSelection(JToggleButton selectedButton) {
-
         for (JToggleButton button : buttons) {
             if (button != selectedButton) {
                 button.setSelected(false);
@@ -52,7 +51,6 @@ public class PanelPlayableCharacters extends JPanel {
         }
 
         thisLevel.updateAvailableSpots(); // Actualizar los spots disponibles en Gameplay
-
     }
 
     @Override
@@ -65,7 +63,7 @@ public class PanelPlayableCharacters extends JPanel {
                 int x = button.getX() + (button.getWidth() / 2) - (button.getIcon().getIconWidth() / 2); // Coordenada x
                                                                                                          // del centro
                                                                                                          // del círculo
-                int diameter = button.getHeight(); // Diámetro del círculo del tamaño del alto del boton
+                int diameter = button.getHeight(); // Diámetro del círculo del tamaño del alto del botón
                 g.setColor(Color.YELLOW);
                 g.fillOval(x, button.getY(), diameter, diameter);
             }
@@ -77,8 +75,11 @@ public class PanelPlayableCharacters extends JPanel {
             JToggleButton button = buttons.get(i);
             button.setIcon(new ImageIcon(new ImageIcon(Dogs.getDogImagePath(indexOfPlayableCharacters.get(i)))
                     .getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
+
+            button.setText(Dogs.getCostOfDog(indexOfPlayableCharacters.get(i)));
+            // Para poder observar cuanto cuesta un personaje , se incluye su costo como el texto del boton.
             button.setName(String.valueOf(indexOfPlayableCharacters.get(i)));
-            // Se agrega de icono y de nombre al boton los valores elegidos por el usuario.
+            // Se agrega de icono y de nombre al botón los valores elegidos por el usuario.
         }
     }
 
@@ -91,15 +92,25 @@ public class PanelPlayableCharacters extends JPanel {
         return -1;
     }
 
+    public int getRewardButtonSelected(){
+        for (JToggleButton button : buttons) {
+            if (button.isSelected()) {
+                return Integer.parseInt(button.getText());
+            }
+        }
+        return -1;
+    }
+
     public void selectedFunctionReady() {
+
         for (JToggleButton button : buttons) {
             button.setSelected(false);
         }
+
         thisLevel.updateAvailableSpots();
     }
 
     public boolean isAnyButtonSelected() {
-
         for (JToggleButton button : buttons) {
             if (button.isSelected()) {
                 return true;

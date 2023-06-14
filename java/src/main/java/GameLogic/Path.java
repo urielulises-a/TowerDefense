@@ -15,13 +15,13 @@ public final class Path {
 
         put(0 , new ArrayList<Point>(Arrays.asList(
                     
-                    new Point(0, 200),
-                    new Point(250,200),
-                    new Point(270,460),
-                    new Point(360,550),
-                    new Point(900,550),
-                    new Point(930, 515),
-                    new Point(955,300),
+                    new Point(0, 165),
+                    new Point(245,160),
+                    new Point(260,430),
+                    new Point(410,520),
+                    new Point(850,530),
+                    new Point(935, 465),
+                    new Point(960,300),
                     new Point(1230, 0)
         )));// )); // Nivel 1 (Neighborhood)
 

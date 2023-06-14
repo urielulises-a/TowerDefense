@@ -17,6 +17,9 @@ public class TowerSelectionWindow extends JFrame {
     private JButton[] listOfCharactersToPlay;
     private ArrayList<Integer> indexSelected;
 
+        public static boolean CharactersSelected = false; // Variable de control para no empezar el nivel hasta que se hayan
+                                                          // seleccionado los personajes.
+
     public TowerSelectionWindow(int level) {
         listOfCharactersToPlay = new JButton[14]; // 14 personajes jugables
         indexSelected = new ArrayList<Integer>();
@@ -35,6 +38,8 @@ public class TowerSelectionWindow extends JFrame {
         setSize(500, 500);
         setLocationRelativeTo(null);
         setVisible(true);
+
+        JOptionPane.showMessageDialog(this, "Selecciona tus personajes a usar *LIMITE: 4 PERSONAJES, ESCOGE BIEN*.");
         
     }
 
@@ -58,8 +63,8 @@ public class TowerSelectionWindow extends JFrame {
                 }
 
                 if (indexSelected.size() >= 4) {
-                    JOptionPane.showMessageDialog(null, "Has seleccionado los personajes requeridos.");
-                    Levels.CharactersSelected = true;
+                    JOptionPane.showMessageDialog(getOwner(), "Has seleccionado los personajes requeridos.");
+                    CharactersSelected = true;
                 }
             }
         });
