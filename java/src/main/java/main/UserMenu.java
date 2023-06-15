@@ -1,6 +1,4 @@
-package GameLogic;
-
-import main.Ventana;
+package main;
 
 import javax.swing.*;
 import java.awt.*;

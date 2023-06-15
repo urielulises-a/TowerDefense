@@ -2,11 +2,19 @@ package GameLogic;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
@@ -32,9 +40,36 @@ public class Gameplay extends JComponent {
     private Timer runLevel; // Timer para renovar el gamplay a 60 FPS
     private TowerSelectionWindow TSW; // Seleccion de perros de inicio
     private boolean panelCreated = false; // Variable de control
+    private AudioInputStream AIS;
+    private Clip levelSuccessSound;
+    private Clip levelFailedSound;
+
 
 
     public Gameplay() {
+
+        try {
+            AIS = AudioSystem.getAudioInputStream(new File("java/src/main/resources/Sounds/levelSuccessSound.wav"));
+            levelSuccessSound =  AudioSystem.getClip();
+            levelSuccessSound.open(AIS);
+
+            // Establece el volumen del Clip (de 0.0 a 1.0)
+            float volumen = 0.1f; // Volumen al 10%
+            FloatControl control = (FloatControl) levelSuccessSound.getControl(FloatControl.Type.MASTER_GAIN);
+            float dB = (float) (Math.log(volumen) / Math.log(10.0) * 20.0);
+            control.setValue(dB);
+
+            AIS = AudioSystem.getAudioInputStream(new File("java/src/main/resources/Sounds/levelFailedSound.wav"));
+            levelFailedSound =  AudioSystem.getClip();
+            levelFailedSound.open(AIS);
+
+            control = (FloatControl) levelFailedSound.getControl(FloatControl.Type.MASTER_GAIN);
+            control.setValue(dB);
+
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
 
         dogsInMap = new ArrayList<>();
         catsInMap = new ArrayList<>();
@@ -72,6 +107,8 @@ public class Gameplay extends JComponent {
             @Override
             public void run() {
                 if (Levels.getHealthOfPlayer() <= 0) {
+                    Levels.battleMusic.stop();
+                    levelFailedSound.start();
 
                     if (dogsInMap.size() > 0) {
                         dogsInMap.clear();
@@ -97,7 +134,8 @@ public class Gameplay extends JComponent {
                 }
 
                 if (actualLevel.isLevelComplete() && catsInMap.size() <= 0) {
-
+                    Levels.battleMusic.stop();
+                    levelSuccessSound.start();
                     int choice = JOptionPane.showOptionDialog(getTopLevelAncestor(), "¡Nivel superado!",
                             "¿Siguiente nivel?", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                             new String[] { "Salir.", "Siguiente Nivel" }, "Salir.");
@@ -149,6 +187,10 @@ public class Gameplay extends JComponent {
     }
 
     public void resetLevel() {
+
+        levelFailedSound.stop();
+        levelFailedSound.setFramePosition(0);
+
         for (Dogs dog : dogsInMap) {
             dog.stopAtack();
         }
@@ -170,7 +212,9 @@ public class Gameplay extends JComponent {
     }
 
     public void nextLevel() {
-
+        levelSuccessSound.stop();
+        levelSuccessSound.setFramePosition(0);
+        
         int nextLevel = actualLevel.getLevel() + 1;
 
 

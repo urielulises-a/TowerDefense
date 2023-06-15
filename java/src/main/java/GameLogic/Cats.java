@@ -1,10 +1,16 @@
 package GameLogic;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
@@ -49,10 +55,21 @@ public class Cats extends JComponent {
     private final Path currentPath;
     private Image catImage;
     private String pathCatImage = "java/src/main/resources/CharactersImages/Gatos/";
+    private Map<Integer, Clip> catGettingHitAudioMap;
 
     public Cats(int typeOfCat, Path path) {
-        if(typeOfCat > 14){
-            typeOfCat = 14;
+        catGettingHitAudioMap = new HashMap<>(); // Inicializar el mapa de Clips de sonido
+
+        try {
+            File soundFile = new File("java/src/main/resources/Sounds/CatHit.wav");
+            AudioInputStream AIS = AudioSystem.getAudioInputStream(soundFile);
+
+            // Crear un Clip separado para cada gato y almacenarlo en el mapa
+            Clip catGettingHitAudio = AudioSystem.getClip();
+            catGettingHitAudio.open(AIS);
+            catGettingHitAudioMap.put(typeOfCat, catGettingHitAudio);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
         }
 
         this.posX = (int) path.getFirst().getX();
@@ -128,6 +145,16 @@ public class Cats extends JComponent {
 
     public void damage(Double amount) {
         health -= amount;
+        
+        int typeOfCat = Integer.parseInt(getName());
+
+        // Obtener el Clip de sonido correspondiente al gato y reproducirlo
+        Clip catGettingHitAudio = catGettingHitAudioMap.get(typeOfCat);
+        if (catGettingHitAudio.isRunning()) {
+            catGettingHitAudio.stop();
+        }
+        catGettingHitAudio.setFramePosition(0);
+        catGettingHitAudio.start();
     }
 
     private int distance(Point point) {

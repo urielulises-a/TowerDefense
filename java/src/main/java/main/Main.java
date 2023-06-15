@@ -1,13 +1,19 @@
 package main;
-import GameLogic.UserMenu;
 import com.ecodeup.jdbc.DataBase;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
 
 public class Main extends JFrame {
 
@@ -16,8 +22,27 @@ public class Main extends JFrame {
     private UserMenu userMenu;
     private Ventana ventana;
     private static DataBase dataBase;
+    private AudioInputStream AIS;
+    public static Clip mainMenuMusic;
 
     public Main() {
+
+        try {
+            AIS = AudioSystem.getAudioInputStream(new File("java/src/main/resources/Sounds/mainMenuMusic.wav"));
+            mainMenuMusic =  AudioSystem.getClip();
+            mainMenuMusic.open(AIS);
+
+            // Establece el volumen del Clip (de 0.0 a 1.0)
+            float volumen = 0.01f; // Volumen al 01%
+            FloatControl control = (FloatControl) mainMenuMusic.getControl(FloatControl.Type.MASTER_GAIN);
+            float dB = (float) (Math.log(volumen) / Math.log(10.0) * 20.0);
+            control.setValue(dB);
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+        mainMenuMusic.start();
         cardPanel = new JPanel();
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
@@ -28,8 +53,10 @@ public class Main extends JFrame {
 
         cardPanel.add(userMenu, "UserMenu");
         cardPanel.add(ventana, "Ventana");
-
+        
         add(cardPanel);
+        setTitle("MithPets");
+        setIconImage(new ImageIcon("java/src/main/resources/BackgroundMenu/Logo.png").getImage());
         setSize(Ventana.WIDTH, Ventana.HEIGHT);
         setResizable(false);
         setLocationRelativeTo(null);
