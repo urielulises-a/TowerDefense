@@ -8,12 +8,20 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
@@ -54,6 +62,8 @@ public class Levels extends JComponent implements MouseListener {
     private Image backgroundLevel;
     private ArrayList<HashMap<Point, Boolean>> availableSpots;
     private PanelPlayableCharacters PPC;
+    private AudioInputStream AIS;
+    public static Clip battleMusic;
 
     public Levels(int Level) {
 
@@ -69,6 +79,23 @@ public class Levels extends JComponent implements MouseListener {
         this.wayPath = new Path(Level);
         this.backgroundLevel = new ImageIcon("java/src/main/resources/Levels/Nivel " + (Level + 1) + ".png").getImage();
         this.PPC = new PanelPlayableCharacters(this);
+
+        try {
+            AIS = AudioSystem.getAudioInputStream(new File("java/src/main/resources/Sounds/battleMusic" + (Level+1) + ".wav"));
+            battleMusic =  AudioSystem.getClip();
+            battleMusic.open(AIS);
+
+            // Establece el volumen del Clip (de 0.0 a 1.0)
+            float volumen = 0.1f; // Volumen al 10%
+            FloatControl control = (FloatControl) battleMusic.getControl(FloatControl.Type.MASTER_GAIN);
+            float dB = (float) (Math.log(volumen) / Math.log(10.0) * 20.0);
+            control.setValue(dB);
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+        battleMusic.start();
 
         add(PPC);
 
