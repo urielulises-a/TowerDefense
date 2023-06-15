@@ -31,20 +31,20 @@ public class Dogs extends JComponent {
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Integer[] { 150, 500, 50, 0 }); // Relacion de "Zeus"
-            put(1, new Integer[] { 100, 0, 0, 0 }); // Relacion de "Persefone"
-            put(2, new Integer[] { 400, 0, 0, 0 }); // Relacion de "Ares"
-            put(3, new Integer[] { 300, 0, 0, 0 }); // Relacion de "Atenea"
-            put(4, new Integer[] { 50, 0, 0, 0 }); // Relacion de "Hades"
-            put(5, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Hera"
-            put(6, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Hermes"
-            put(7, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Cerbero"S
-            put(8, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Perseo"
-            put(9, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Triton"
-            put(10, new Integer[] { 0, 0, 0, 0 }); // Relacion deS "Hebe"
-            put(11, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Cronos"
-            put(12, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Teseo"
-            put(13, new Integer[] { 0, 0, 0, 0 }); // Relacion de "Demeter"
+            put(0,  new Integer[] { 200 , 10    , 100   , 0 }); // Relacion de "Zeus"
+            put(1,  new Integer[] { 300 , 2000  , 50    , 1 }); // Relacion de "Persefone"
+            put(2,  new Integer[] { 200 , 1     , 25    , 2 }); // Relacion de "Ares"
+            put(3,  new Integer[] { 200 , 500   , 50    , 3 }); // Relacion de "Atenea"
+            put(4,  new Integer[] { 300 , 1     , 150   , 4 }); // Relacion de "Hades"
+            put(5,  new Integer[] { 150 , 1000  , 75    , 5 }); // Relacion de "Hera"
+            put(6,  new Integer[] { 300 , 1000  , 200   , 6 }); // Relacion de "Hermes"
+            put(7,  new Integer[] { 400 , 2000  , 100   , 7 }); // Relacion de "Cerbero"
+            put(8,  new Integer[] { 700 , 4000  , 150   , 8 }); // Relacion de "Perseo"
+            put(9,  new Integer[] { 200 , 500   , 75    , 9 }); // Relacion de "Triton"
+            put(10, new Integer[] { 700 , 3000  , 150   , 10}); // Relacion de "Hebe"
+            put(11, new Integer[] { 700 , 500   , 200   , 11}); // Relacion de "Cronos"
+            put(12, new Integer[] { 300 , 2000  , 75    , 12}); // Relacion de "Teseo"
+            put(13, new Integer[] { 300 , 3000  , 100   , 13}); // Relacion de "Demeter"
 
         }
     };

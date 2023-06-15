@@ -21,20 +21,20 @@ public class Bullet extends JComponent {
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0, new Double[] { 10.0, 20.0, 1.0 }); // Relacion de "Zeus"
-            put(1, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Persefone"
-            put(2, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Ares"
-            put(3, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Atenea"
-            put(4, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Hades"
-            put(5, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Hera"
-            put(6, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Hermes"
-            put(7, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Cerbero"
-            put(8, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Perseo"
-            put(9, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Triton"
-            put(10, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Hebe"
-            put(11, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Cronos"
-            put(12, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Teseo"
-            put(13, new Double[] { 1.0, 20.0, 10.0 }); // Relacion de "Demeter"
+            put(0,  new Double[] { 1.0  , 1000.0, 1.0   }); // Relacion de "Zeus"
+            put(1,  new Double[] { 50.0 , 5.0   , 100.0 }); // Relacion de "Persefone"
+            put(2,  new Double[] { 1.0  , 100.0 , 1.0   }); // Relacion de "Ares"
+            put(3,  new Double[] { 20.0 , 10.0  , 100.0 }); // Relacion de "Atenea"
+            put(4,  new Double[] { 5.0  , 100.0 , 100.0 }); // Relacion de "Hades"
+            put(5,  new Double[] { 15.0 , 10.0  , 1.0   }); // Relacion de "Hera"
+            put(6,  new Double[] { 0.5  , 1000.0, 1.0   }); // Relacion de "Hermes"
+            put(7,  new Double[] { 60.0 , 15.0  , 200.0 }); // Relacion de "Cerbero"
+            put(8,  new Double[] { 80.0 , 1000.0, 1.0   }); // Relacion de "Perseo"
+            put(9,  new Double[] { 15.0 , 5.0   , 50.0  }); // Relacion de "Triton"
+            put(10, new Double[] { 40.0 , 1000.0, 1.0   }); // Relacion de "Hebe"
+            put(11, new Double[] { 1.0  , 1000.0, 1.0   }); // Relacion de "Cronos"
+            put(12, new Double[] { 30.0 , 3.0   , 100.0 }); // Relacion de "Teseo"
+            put(13, new Double[] { 20.0 , 100.0 , 1.0  }); // Relacion de "Demeter"
 
         }
     };
