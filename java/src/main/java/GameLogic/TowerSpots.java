@@ -7,8 +7,7 @@ import java.util.Map;
 
 public class TowerSpots {
 
-    public static Map<Integer, ArrayList<HashMap<Point, Boolean>>> correlationTowersSpotAvailable = new HashMap<Integer, ArrayList<HashMap<Point, Boolean>>>() {
-        {
+    public static Map<Integer, ArrayList<HashMap<Point, Boolean>>> correlationTowersSpotAvailable = new HashMap<Integer, ArrayList<HashMap<Point, Boolean>>>() {{
             put(0, new ArrayList<HashMap<Point, Boolean>>() {   // Spots para torres del nivel 1 (Neighborhood)
                 {
                     add(new HashMap<Point, Boolean>() {{    put(new Point(385, 200), true);     }});
@@ -36,20 +35,29 @@ public class TowerSpots {
 
                 }
             });
-            put(2, new ArrayList<HashMap<Point, Boolean>>() {   // Spots para torres del nivel 3 
+            put(2, new ArrayList<HashMap<Point, Boolean>>() {   // Spots para torres del nivel 3 (Hell)
                 {
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
-                    add(new HashMap<Point, Boolean>() {{    put(new Point(0, 0), true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (240,165),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (210,345),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (400,350),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (150,520),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (385,540),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (240,705),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (465,700),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (575,425),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (695,615),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (825,420),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (945,700),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (1020,540),true);}});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (1165,705),true);}});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (1240,520),true);}});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (998,345),true); }});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (1155,170),true);}});
+                    add(new HashMap<Point, Boolean>() {{put(new Point (1200, 345),true); }});
                 }
             });
-        }
-    };
+
+    }};
 
     public static boolean isSpotAvailable(int level, Point point) {
         ArrayList<HashMap<Point, Boolean>> spots = correlationTowersSpotAvailable.get(level);

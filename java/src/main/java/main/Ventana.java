@@ -1,6 +1,5 @@
 package main;
 import GameLogic.Gameplay;
-import GameLogic.UserMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,10 +30,12 @@ public class Ventana extends JPanel {
 
     }
     public static void newScene(){
+        Main.mainMenuMusic.stop();
         
-        
-        JFrame jf = new JFrame("");
+        JFrame jf = new JFrame("MithPets");
         Gameplay newGameplay = new Gameplay();
+        jf.setIconImage(new ImageIcon("java/src/main/resources/BackgroundMenu/Logo.png").getImage());
+        
         jf.add(newGameplay);
         jf.pack();
         jf.setVisible(true);
