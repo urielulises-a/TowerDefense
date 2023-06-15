@@ -21,9 +21,9 @@ public class Bullet extends JComponent {
             // Dentro de la clase "Bullet" se instancia el daño y el rango de daño con el
             // tipo de municion (tambien existe tabla de correlacion)
 
-            put(0,  new Double[] { 1.0  , 1000.0, 1.0   }); // Relacion de "Zeus"
+            put(0,  new Double[] { 0.5  , 100.0 , 1.0   }); // Relacion de "Zeus"
             put(1,  new Double[] { 50.0 , 5.0   , 100.0 }); // Relacion de "Persefone"
-            put(2,  new Double[] { 1.0  , 100.0 , 1.0   }); // Relacion de "Ares"
+            put(2,  new Double[] { 5.0  , 100.0 , 1.0   }); // Relacion de "Ares"
             put(3,  new Double[] { 20.0 , 10.0  , 100.0 }); // Relacion de "Atenea"
             put(4,  new Double[] { 5.0  , 100.0 , 100.0 }); // Relacion de "Hades"
             put(5,  new Double[] { 15.0 , 10.0  , 1.0   }); // Relacion de "Hera"

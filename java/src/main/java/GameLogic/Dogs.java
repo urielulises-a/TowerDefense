@@ -33,7 +33,7 @@ public class Dogs extends JComponent {
 
             put(0,  new Integer[] { 200 , 10    , 100   , 0 }); // Relacion de "Zeus"
             put(1,  new Integer[] { 300 , 2000  , 50    , 1 }); // Relacion de "Persefone"
-            put(2,  new Integer[] { 200 , 1     , 25    , 2 }); // Relacion de "Ares"
+            put(2,  new Integer[] { 200 , 100   , 25    , 2 }); // Relacion de "Ares"
             put(3,  new Integer[] { 200 , 500   , 50    , 3 }); // Relacion de "Atenea"
             put(4,  new Integer[] { 300 , 1     , 150   , 4 }); // Relacion de "Hades"
             put(5,  new Integer[] { 150 , 1000  , 75    , 5 }); // Relacion de "Hera"
