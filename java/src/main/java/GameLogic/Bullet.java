@@ -34,7 +34,7 @@ public class Bullet extends JComponent {
             put(10, new Double[] { 40.0 , 1000.0, 1.0   }); // Relacion de "Hebe"
             put(11, new Double[] { 1.0  , 1000.0, 1.0   }); // Relacion de "Cronos"
             put(12, new Double[] { 30.0 , 3.0   , 100.0 }); // Relacion de "Teseo"
-            put(13, new Double[] { 20.0 , 100.0 , 1.0  }); // Relacion de "Demeter"
+            put(13, new Double[] { 20.0 , 100.0 , 1.0   }); // Relacion de "Demeter"
 
         }
     };
