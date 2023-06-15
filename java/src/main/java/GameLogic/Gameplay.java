@@ -39,7 +39,7 @@ public class Gameplay extends JComponent {
         dogsInMap = new ArrayList<>();
         catsInMap = new ArrayList<>();
         bulletsInMap = new ArrayList<>();
-        actualLevel = new Levels(0);
+        actualLevel = new Levels(DataBase.level);
         runLevel = new Timer("Run Level Timer");
 
         setPreferredSize(new Dimension(Ventana.WIDTH, Ventana.HEIGHT));

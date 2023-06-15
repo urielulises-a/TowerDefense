@@ -8,7 +8,7 @@ public class DataBase {
 
     static int id;
     String username;
-    static int level;
+    public static int level;
     static Connection connection;
     static PreparedStatement preparedStatement;
     ResultSet resultSet;
